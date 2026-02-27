@@ -1,0 +1,617 @@
+{% extends 'base.html' %}
+{% block title %}Dashboard — Fin AI{% endblock %}
+
+{% block content %}
+<style>
+    /* Full white override for dashboard */
+    body {
+        background: #f0f2f5 !important
+    }
+
+    .page-header {
+        background: #fff !important;
+        border-bottom: 1px solid #e0e4ea;
+        padding: 5rem 2rem 1.5rem !important
+    }
+
+    .page-header h1 {
+        color: #1a1a2e !important
+    }
+
+    .page-header h1 i {
+        -webkit-text-fill-color: #2563eb !important;
+        color: #2563eb !important
+    }
+
+    .page-header p {
+        color: #6b7280 !important
+    }
+
+    .navbar {
+        background: rgba(255, 255, 255, 0.95) !important;
+        border-bottom: 1px solid #e0e4ea !important
+    }
+
+    .navbar.scrolled {
+        background: rgba(255, 255, 255, 0.98) !important
+    }
+
+    .nav-brand .accent {
+        -webkit-text-fill-color: #2563eb !important
+    }
+
+    .nav-brand {
+        color: #1a1a2e !important
+    }
+
+    .brand-icon {
+        background: linear-gradient(135deg, #2563eb, #0ea5e9) !important
+    }
+
+    .nav-links a {
+        color: #6b7280 !important
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+        color: #2563eb !important;
+        background: rgba(37, 99, 235, 0.08) !important
+    }
+
+    .nav-toggle span {
+        background: #1a1a2e !important
+    }
+
+    .footer {
+        background: #fff !important;
+        border-top: 1px solid #e0e4ea !important
+    }
+
+    .footer p,
+    .footer .footer-tag {
+        color: #9ca3af !important
+    }
+
+    .dashboard-container {
+        background: #f0f2f5;
+        padding: 1.5rem 2rem
+    }
+
+    /* Tabs */
+    .section-tabs {
+        display: flex;
+        gap: 2px;
+        margin-bottom: 1rem;
+        background: #e5e7eb;
+        border-radius: 8px;
+        overflow: hidden
+    }
+
+    .stab {
+        padding: 0.6rem 1.25rem;
+        font-size: 0.82rem;
+        font-weight: 700;
+        cursor: pointer;
+        border: none;
+        background: transparent;
+        color: #6b7280;
+        transition: all .2s
+    }
+
+    .stab.active {
+        background: #fff;
+        color: #2563eb;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08)
+    }
+
+    .stab:hover:not(.active) {
+        background: rgba(255, 255, 255, 0.6)
+    }
+
+    /* Summary bar */
+    .summary-bar {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 0.75rem;
+        margin-bottom: 1rem
+    }
+
+    .sum-card {
+        background: #fff;
+        border-radius: 10px;
+        padding: 1rem 1.25rem;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+        border: 1px solid #e5e7eb
+    }
+
+    .sum-card .sum-lbl {
+        font-size: 0.7rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: #9ca3af;
+        margin-bottom: 0.25rem
+    }
+
+    .sum-card .sum-val {
+        font-size: 1.4rem;
+        font-weight: 800
+    }
+
+    .sum-card .sum-val.green {
+        color: #16a34a
+    }
+
+    .sum-card .sum-val.red {
+        color: #dc2626
+    }
+
+    .sum-card .sum-val.blue {
+        color: #2563eb
+    }
+
+    .sum-card .sum-val.orange {
+        color: #ea580c
+    }
+
+    .sum-pct {
+        font-size: 0.72rem;
+        color: #9ca3af;
+        margin-top: 0.15rem
+    }
+
+    /* Spreadsheet */
+    .spreadsheet {
+        background: #fff;
+        border-radius: 10px;
+        overflow-x: auto;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+        margin-bottom: 1rem;
+        border: 1px solid #e5e7eb
+    }
+
+    .ss-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.78rem;
+        white-space: nowrap
+    }
+
+    .ss-table thead th {
+        position: sticky;
+        top: 0;
+        background: #f8fafc;
+        color: #475569;
+        font-weight: 700;
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        letter-spacing: 0.3px;
+        padding: 0.6rem 0.7rem;
+        text-align: right;
+        border-bottom: 2px solid #e2e8f0
+    }
+
+    .ss-table thead th:first-child {
+        text-align: left;
+        min-width: 140px;
+        background: #eef2f7
+    }
+
+    .ss-table tbody td {
+        padding: 0.5rem 0.7rem;
+        text-align: right;
+        border-bottom: 1px solid #f1f5f9;
+        color: #334155;
+        font-variant-numeric: tabular-nums
+    }
+
+    .ss-table tbody td:first-child {
+        text-align: left;
+        font-weight: 600;
+        color: #1e293b;
+        background: #fafbfc;
+        position: sticky;
+        left: 0
+    }
+
+    .ss-table tbody tr:hover td {
+        background: #f0f7ff
+    }
+
+    .ss-table tbody tr.row-total td {
+        font-weight: 800;
+        background: #f1f5f9;
+        border-top: 2px solid #cbd5e1;
+        color: #1e293b
+    }
+
+    .ss-table tbody tr.row-income td {
+        color: #16a34a;
+        font-weight: 700;
+        background: #f0fdf4
+    }
+
+    .ss-table tbody tr.row-income td:first-child {
+        background: #e8f5e9
+    }
+
+    .ss-table tbody tr.row-savings td {
+        color: #2563eb;
+        font-weight: 600;
+        background: #eff6ff
+    }
+
+    .ss-table tbody tr.row-savings td:first-child {
+        background: #dbeafe
+    }
+
+    .cat-dot {
+        display: inline-block;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        margin-right: 6px;
+        vertical-align: middle
+    }
+
+    /* Charts */
+    .chart-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+        margin-bottom: 1rem
+    }
+
+    .chart-box {
+        background: #fff;
+        border-radius: 10px;
+        padding: 1.25rem;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+        border: 1px solid #e5e7eb
+    }
+
+    .chart-box h4 {
+        font-size: 0.88rem;
+        font-weight: 700;
+        color: #1e293b;
+        margin-bottom: 0.75rem
+    }
+
+    .chart-canvas {
+        position: relative;
+        height: 260px
+    }
+
+    @media(max-width:768px) {
+        .chart-grid {
+            grid-template-columns: 1fr
+        }
+    }
+
+    /* Insights */
+    .insights-row {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 0.75rem;
+        margin-bottom: 1rem
+    }
+
+    .insight {
+        background: #fff;
+        border-radius: 10px;
+        padding: 1rem 1.25rem;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+        border: 1px solid #e5e7eb;
+        border-left: 4px solid #2563eb
+    }
+
+    .insight.warn {
+        border-left-color: #f59e0b
+    }
+
+    .insight.good {
+        border-left-color: #16a34a
+    }
+
+    .insight strong {
+        font-size: 0.85rem;
+        display: block;
+        margin-bottom: 0.25rem;
+        color: #1e293b
+    }
+
+    .insight p {
+        font-size: 0.8rem;
+        color: #64748b;
+        margin: 0;
+        line-height: 1.5
+    }
+
+    /* Quick Actions in white theme */
+    .quick-actions {
+        background: #fff;
+        border-radius: 10px;
+        padding: 1.5rem;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+        border: 1px solid #e5e7eb
+    }
+
+    .quick-actions h3 {
+        color: #1e293b !important;
+        font-size: 1rem
+    }
+
+    .action-card {
+        background: #f8fafc !important;
+        border: 1px solid #e5e7eb !important;
+        color: #1e293b !important
+    }
+
+    .action-card:hover {
+        background: #eff6ff !important;
+        border-color: #2563eb !important
+    }
+
+    .action-card i {
+        color: #2563eb !important
+    }
+
+    .action-card span {
+        color: #334155 !important
+    }
+</style>
+
+<section class="page-header">
+    <h1><i class="fas fa-chart-pie"></i> Financial Dashboard</h1>
+    <p>Your complete financial tracker powered by AI</p>
+</section>
+
+<div class="dashboard-container">
+
+    <!-- KYC Onboarding CTA -->
+    <div id="kycCta" class="glass-card animate-on-scroll"
+        style="margin-bottom: 1.5rem; background: linear-gradient(135deg, rgba(37,99,235,0.03), rgba(108,99,255,0.05)); border: 1px solid rgba(37,99,235,0.2); display: flex; justify-content: space-between; align-items: center; padding: 1.5rem 2rem; border-radius: 12px;">
+        <div style="flex: 1;">
+            <h3 style="margin-bottom: 0.4rem; color: #1e293b; font-size: 1.1rem;"><i class="fas fa-shield-alt"
+                    style="color: #6C63FF; margin-right: 8px;"></i> Action Required: Verify Identity</h3>
+            <p style="color: #64748b; margin: 0; font-size: 0.9rem;">Complete your KYC (ID/Passport) and link your
+                income source card to unlock microfinance loans and advanced features.</p>
+        </div>
+        <a href="/onboarding" class="btn btn-primary"
+            style="white-space: nowrap; margin-left: 1.5rem; border-radius: 8px; box-shadow: 0 4px 14px rgba(108, 99, 255, 0.3);">Complete
+            Profile <i class="fas fa-arrow-right" style="margin-left: 6px;"></i></a>
+    </div>
+
+    <!-- Tabs -->
+    <div class="section-tabs">
+        <button class="stab active" data-view="monthly">Monthly Overview</button>
+        <button class="stab" data-view="yearly">Yearly Breakdown</button>
+        <button class="stab" data-view="income">Income Dashboard</button>
+        <button class="stab" data-view="expenses">Expenses</button>
+    </div>
+
+    <!-- Summary Cards -->
+    <div class="summary-bar">
+        <div class="sum-card">
+            <div class="sum-lbl">Monthly Income</div>
+            <div class="sum-val blue" id="xIncome">30,000</div>
+        </div>
+        <div class="sum-card">
+            <div class="sum-lbl">Total Expenses</div>
+            <div class="sum-val red" id="xExpenses">26,000</div>
+            <div class="sum-pct" id="xExpPct">86.7% of income</div>
+        </div>
+        <div class="sum-card">
+            <div class="sum-lbl">Net Savings</div>
+            <div class="sum-val green" id="xSavings">4,000</div>
+            <div class="sum-pct" id="xSavePct">13.3% savings rate</div>
+        </div>
+        <div class="sum-card">
+            <div class="sum-lbl">Health Score</div>
+            <div class="sum-val orange" id="xHealth">72 / 100</div>
+        </div>
+        <div class="sum-card">
+            <div class="sum-lbl">Monthly Budget</div>
+            <div class="sum-val blue">30,000</div>
+            <div class="sum-pct">50 / 30 / 20 target</div>
+        </div>
+    </div>
+
+    <!-- Spreadsheet -->
+    <div class="spreadsheet">
+        <table class="ss-table" id="ssTable">
+            <thead id="ssHead"></thead>
+            <tbody id="ssBody"></tbody>
+        </table>
+    </div>
+
+    <!-- Charts -->
+    <div class="chart-grid">
+        <div class="chart-box">
+            <h4>Category Breakdown</h4>
+            <div class="chart-canvas"><canvas id="xDonut"></canvas></div>
+        </div>
+        <div class="chart-box">
+            <h4>Monthly Spending Trend</h4>
+            <div class="chart-canvas"><canvas id="xBar"></canvas></div>
+        </div>
+        <div class="chart-box">
+            <h4>Budget Rule (50 / 30 / 20)</h4>
+            <div class="chart-canvas"><canvas id="xRule"></canvas></div>
+        </div>
+        <div class="chart-box">
+            <h4>Savings Growth</h4>
+            <div class="chart-canvas"><canvas id="xLine"></canvas></div>
+        </div>
+    </div>
+
+    <!-- Insights -->
+    <div class="insights-row" id="xInsights"></div>
+
+    <!-- Quick Actions -->
+    <div class="quick-actions">
+        <h3>Quick Actions</h3>
+        <div class="actions-grid">
+            <a href="/budget" class="action-card"><i class="fas fa-wallet"></i><span>Budget Planner</span></a>
+            <a href="/loans" class="action-card"><i class="fas fa-hand-holding-usd"></i><span>Loan
+                    Eligibility</span></a>
+            <a href="/savings" class="action-card"><i class="fas fa-piggy-bank"></i><span>Savings Goal</span></a>
+            <a href="/chat" class="action-card"><i class="fas fa-robot"></i><span>Ask Fin AI</span></a>
+            <a href="/analytics" class="action-card"><i class="fas fa-chart-line"></i><span>Risk Analytics</span></a>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        const CATS = [
+            { name: 'Housing / Rent', base: 8000, color: '#e74c3c', type: 'need' },
+            { name: 'Utilities', base: 2000, color: '#e67e22', type: 'need' },
+            { name: 'Groceries', base: 5000, color: '#f1c40f', type: 'need' },
+            { name: 'Transportation', base: 2000, color: '#2ecc71', type: 'need' },
+            { name: 'Healthcare', base: 1000, color: '#1abc9c', type: 'need' },
+            { name: 'Entertainment', base: 1500, color: '#3498db', type: 'want' },
+            { name: 'Dining Out', base: 2000, color: '#9b59b6', type: 'want' },
+            { name: 'Shopping', base: 1500, color: '#e91e63', type: 'want' },
+            { name: 'Insurance', base: 1000, color: '#607d8b', type: 'need' },
+            { name: 'Debt / EMI', base: 2000, color: '#795548', type: 'need' },
+        ];
+        const INCOME = 30000;
+        const SAVINGS_BASE = 4000;
+
+        const data = MONTHS.map(() => CATS.map(c => Math.round(c.base * (0.85 + Math.random() * 0.3))));
+        const savingsData = MONTHS.map(() => Math.round(SAVINGS_BASE * (0.8 + Math.random() * 0.4)));
+
+        // Build table
+        const thead = document.getElementById('ssHead');
+        const tbody = document.getElementById('ssBody');
+        let hdr = '<tr><th>Category</th>';
+        MONTHS.forEach(m => hdr += '<th>' + m + '</th>');
+        hdr += '<th>Total</th><th>Avg</th><th>% of Inc</th></tr>';
+        thead.innerHTML = hdr;
+
+        let bodyHtml = '';
+        // Income row
+        bodyHtml += '<tr class="row-income"><td><span class="cat-dot" style="background:#16a34a"></span>Income</td>';
+        MONTHS.forEach(() => bodyHtml += '<td>' + INCOME.toLocaleString('en-IN') + '</td>');
+        bodyHtml += '<td>' + (INCOME * 12).toLocaleString('en-IN') + '</td><td>' + INCOME.toLocaleString('en-IN') + '</td><td>100%</td></tr>';
+
+        const catTotals = CATS.map(() => 0);
+        const monthTotals = MONTHS.map(() => 0);
+        CATS.forEach((cat, ci) => {
+            bodyHtml += '<tr><td><span class="cat-dot" style="background:' + cat.color + '"></span>' + cat.name + '</td>';
+            let rowTotal = 0;
+            MONTHS.forEach((_, mi) => {
+                const v = data[mi][ci];
+                rowTotal += v;
+                catTotals[ci] += v;
+                monthTotals[mi] += v;
+                bodyHtml += '<td>' + v.toLocaleString('en-IN') + '</td>';
+            });
+            const avg = Math.round(rowTotal / 12);
+            const pct = ((rowTotal / (INCOME * 12)) * 100).toFixed(1);
+            bodyHtml += '<td>' + rowTotal.toLocaleString('en-IN') + '</td><td>' + avg.toLocaleString('en-IN') + '</td><td>' + pct + '%</td></tr>';
+        });
+
+        // Total row
+        const totalExpYear = monthTotals.reduce((s, v) => s + v, 0);
+        bodyHtml += '<tr class="row-total"><td>Total Expenses</td>';
+        MONTHS.forEach((_, mi) => bodyHtml += '<td>' + monthTotals[mi].toLocaleString('en-IN') + '</td>');
+        bodyHtml += '<td>' + totalExpYear.toLocaleString('en-IN') + '</td><td>' + Math.round(totalExpYear / 12).toLocaleString('en-IN') + '</td><td>' + ((totalExpYear / (INCOME * 12)) * 100).toFixed(1) + '%</td></tr>';
+
+        // Savings row
+        const totalSav = savingsData.reduce((s, v) => s + v, 0);
+        bodyHtml += '<tr class="row-savings"><td><span class="cat-dot" style="background:#2563eb"></span>Savings</td>';
+        MONTHS.forEach((_, mi) => bodyHtml += '<td>' + savingsData[mi].toLocaleString('en-IN') + '</td>');
+        bodyHtml += '<td>' + totalSav.toLocaleString('en-IN') + '</td><td>' + Math.round(totalSav / 12).toLocaleString('en-IN') + '</td><td>' + ((totalSav / (INCOME * 12)) * 100).toFixed(1) + '%</td></tr>';
+        tbody.innerHTML = bodyHtml;
+
+        // Summary cards
+        const avgExp = Math.round(totalExpYear / 12);
+        const avgSav = Math.round(totalSav / 12);
+        document.getElementById('xExpenses').textContent = avgExp.toLocaleString('en-IN');
+        document.getElementById('xSavings').textContent = avgSav.toLocaleString('en-IN');
+        document.getElementById('xExpPct').textContent = ((avgExp / INCOME) * 100).toFixed(1) + '% of income';
+        document.getElementById('xSavePct').textContent = ((avgSav / INCOME) * 100).toFixed(1) + '% savings rate';
+
+        // Charts
+        const cOpts = { responsive: true, maintainAspectRatio: false, plugins: { legend: { labels: { color: '#64748b', font: { family: 'Inter', size: 11 } } } } };
+        const bOpts = { ...cOpts, scales: { x: { ticks: { color: '#94a3b8' }, grid: { color: '#f1f5f9' } }, y: { ticks: { color: '#94a3b8' }, grid: { color: '#f1f5f9' } } } };
+
+        new Chart(document.getElementById('xDonut'), {
+            type: 'doughnut',
+            data: { labels: CATS.map(c => c.name), datasets: [{ data: catTotals, backgroundColor: CATS.map(c => c.color), borderWidth: 2, borderColor: '#fff' }] },
+            options: { ...cOpts, cutout: '55%', plugins: { ...cOpts.plugins, legend: { position: 'right', labels: { color: '#64748b', font: { family: 'Inter', size: 10 }, padding: 6 } } } }
+        });
+
+        new Chart(document.getElementById('xBar'), {
+            type: 'bar',
+            data: {
+                labels: MONTHS, datasets: [
+                    { label: 'Expenses', data: monthTotals, backgroundColor: '#6366f1', borderRadius: 4 },
+                    { label: 'Savings', data: savingsData, backgroundColor: '#22c55e', borderRadius: 4 }
+                ]
+            },
+            options: bOpts
+        });
+
+        const needsAmt = catTotals.filter((_, i) => CATS[i].type === 'need').reduce((s, v) => s + v, 0);
+        const wantsAmt = catTotals.filter((_, i) => CATS[i].type === 'want').reduce((s, v) => s + v, 0);
+        const needsPct = (needsAmt / (INCOME * 12) * 100).toFixed(1);
+        const wantsPct = (wantsAmt / (INCOME * 12) * 100).toFixed(1);
+        const savPct = (totalSav / (INCOME * 12) * 100).toFixed(1);
+        new Chart(document.getElementById('xRule'), {
+            type: 'bar',
+            data: {
+                labels: ['Needs', 'Wants', 'Savings'], datasets: [
+                    { label: 'Actual %', data: [+needsPct, +wantsPct, +savPct], backgroundColor: ['#ef4444', '#3b82f6', '#22c55e'], borderRadius: 6 },
+                    { label: 'Ideal %', data: [50, 30, 20], backgroundColor: ['rgba(239,68,68,0.15)', 'rgba(59,130,246,0.15)', 'rgba(34,197,94,0.15)'], borderRadius: 6 }
+                ]
+            },
+            options: { ...bOpts, indexAxis: 'y' }
+        });
+
+        let cumSav = 0;
+        const cumData = savingsData.map(v => { cumSav += v; return cumSav; });
+        new Chart(document.getElementById('xLine'), {
+            type: 'line',
+            data: {
+                labels: MONTHS, datasets: [
+                    { label: 'Cumulative Savings', data: cumData, borderColor: '#22c55e', backgroundColor: 'rgba(34,197,94,0.08)', fill: true, tension: 0.3, pointRadius: 4, pointBackgroundColor: '#22c55e' },
+                    { label: 'Target', data: MONTHS.map((_, i) => (i + 1) * 5000), borderColor: '#f59e0b', borderDash: [6, 4], fill: false, pointRadius: 0 }
+                ]
+            },
+            options: bOpts
+        });
+
+        // Insights
+        document.getElementById('xInsights').innerHTML = [
+            { cls: 'warn', title: 'Housing Costs', text: 'Housing uses ' + ((catTotals[0] / (INCOME * 12)) * 100).toFixed(1) + '% of income. Aim for under 30%.' },
+            { cls: 'good', title: 'Savings Trend', text: 'You saved ' + totalSav.toLocaleString('en-IN') + ' this year. ' + (+savPct >= 15 ? 'Great rate!' : 'Try to increase to 20%.') },
+            { cls: '', title: 'Top Expense', text: 'Biggest category: ' + CATS[catTotals.indexOf(Math.max(...catTotals))].name + ' at ' + Math.max(...catTotals).toLocaleString('en-IN') + '/year.' },
+            { cls: 'warn', title: 'Dining Expense', text: 'Dining out costs ' + Math.round(catTotals[6] / 12).toLocaleString('en-IN') + '/mo. Cooking at home saves ~40%.' },
+        ].map(i => '<div class="insight ' + i.cls + '"><strong>' + i.title + '</strong><p>' + i.text + '</p></div>').join('');
+
+        // Tab switching
+        document.querySelectorAll('.stab').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.stab').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+            });
+        });
+        // Dashboard Tab Logic
+        const tabs = document.querySelectorAll('.stab');
+        tabs.forEach(t => t.addEventListener('click', () => {
+            tabs.forEach(x => x.classList.remove('active'));
+            t.classList.add('active');
+        }));
+
+        // KYC CTA Hide logic
+        if (localStorage.getItem('kycComplete') === 'true') {
+            const kycCta = document.getElementById('kycCta');
+            if (kycCta) kycCta.style.display = 'none';
+        }
+    });
+</script>
+{% endblock %}

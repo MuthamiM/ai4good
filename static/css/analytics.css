@@ -1,0 +1,99 @@
+/* ═══════════════════════════════════════════════════════════════════════
+   Fin AI — Analytics & Tracker Styles (Light Theme)
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* Analytics Tabs */
+.analytics-tabs {
+    display: flex;
+    gap: 2px;
+    flex-wrap: wrap;
+    background: #e5e7eb;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 1rem
+}
+
+.tab-btn {
+    flex: 1;
+    padding: 0.75rem 1.25rem;
+    border: none;
+    border-radius: 0;
+    background: transparent;
+    color: #6b7280;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all .2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+}
+
+.tab-btn:hover {
+    color: #1e293b;
+    background: rgba(255, 255, 255, 0.6)
+}
+
+.tab-btn.active {
+    color: #2563eb;
+    background: #fff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08)
+}
+
+.tab-panel {
+    display: none
+}
+
+.tab-panel.active {
+    display: block
+}
+
+/* Data Table */
+.table-responsive {
+    overflow-x: auto;
+    margin: 0 -0.5rem;
+    padding: 0 0.5rem
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem
+}
+
+.data-table th {
+    text-align: left;
+    padding: 0.75rem 1rem;
+    color: #6b7280;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.5px;
+    border-bottom: 2px solid #e2e8f0;
+    background: #f8fafc
+}
+
+.data-table td {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid #f1f5f9;
+    color: #64748b
+}
+
+.data-table tr:hover td {
+    background: #f0f7ff
+}
+
+.data-table td:first-child {
+    color: #1e293b;
+    font-weight: 600
+}
+
+/* Holding Rows */
+.holding-row {
+    padding: 1rem;
+    border-radius: 10px;
+    background: #fafbfc;
+    border: 1px solid #e5e7eb;
+    margin-bottom: 0.75rem
+}

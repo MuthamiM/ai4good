@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+{% block title %}Loan Eligibility — Fin AI{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <h1><i class="fas fa-hand-holding-usd"></i> Microfinance Loan Checker</h1>
+    <p>AI-assessed eligibility scoring and personalized product matching</p>
+</section>
+
+<div class="tool-container">
+    <!-- Input Form -->
+    <div class="glass-card animate-on-scroll">
+        <h2><i class="fas fa-user-check"></i> Your Financial Profile</h2>
+        <form id="loanForm" class="form-grid-2">
+            <div class="form-group">
+                <label for="lIncome"><i class="fas fa-rupee-sign"></i> Monthly Income (Ksh )</label>
+                <input type="number" id="lIncome" placeholder="e.g. 25000" required />
+            </div>
+            <div class="form-group">
+                <label for="lExpenses"><i class="fas fa-shopping-cart"></i> Monthly Expenses (Ksh )</label>
+                <input type="number" id="lExpenses" placeholder="e.g. 15000" required />
+            </div>
+            <div class="form-group">
+                <label for="lDebt"><i class="fas fa-credit-card"></i> Existing Debt (Ksh )</label>
+                <input type="number" id="lDebt" placeholder="e.g. 50000" value="0" />
+            </div>
+            <div class="form-group">
+                <label for="lSavings"><i class="fas fa-piggy-bank"></i> Total Savings (Ksh )</label>
+                <input type="number" id="lSavings" placeholder="e.g. 30000" value="0" />
+            </div>
+            <div class="form-group">
+                <label for="lEmployment"><i class="fas fa-briefcase"></i> Employment Duration (months)</label>
+                <input type="number" id="lEmployment" placeholder="e.g. 24" value="0" />
+            </div>
+            <div class="form-group">
+                <label for="lDependents"><i class="fas fa-users"></i> Number of Dependents</label>
+                <input type="number" id="lDependents" placeholder="e.g. 2" value="0" />
+            </div>
+            <div class="form-group">
+                <label for="lAmount"><i class="fas fa-money-bill-wave"></i> Requested Loan Amount (Ksh )</label>
+                <input type="number" id="lAmount" placeholder="e.g. 50000" required />
+            </div>
+            <div class="form-group">
+                <label><i class="fas fa-university"></i> Bank Account?</label>
+                <div class="toggle-group">
+                    <label class="toggle">
+                        <input type="checkbox" id="lBank" checked />
+                        <span class="toggle-slider"></span>
+                        <span class="toggle-label">Yes, I have a bank account</span>
+                    </label>
+                </div>
+            </div>
+            <div class="form-full">
+                <button type="submit" class="btn btn-primary btn-lg">
+                    <i class="fas fa-search"></i> Check Eligibility
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Results -->
+    <div class="hidden" id="loanResults">
+
+        <!-- Score & Metrics -->
+        <div class="metrics-row animate-on-scroll">
+            <div class="metric-card">
+                <div class="metric-ring" id="loanScoreRing">
+                    <svg viewBox="0 0 120 120">
+                        <circle cx="60" cy="60" r="52" class="ring-bg" />
+                        <circle cx="60" cy="60" r="52" class="ring-fill" id="loanCircle" />
+                    </svg>
+                    <span class="metric-ring-value" id="loanScore">0</span>
+                </div>
+                <span class="metric-label">Eligibility Score</span>
+            </div>
+            <div class="metric-card">
+                <span class="metric-big" id="loanVerdict">—</span>
+                <span class="metric-label">Verdict</span>
+            </div>
+            <div class="metric-card">
+                <span class="metric-big" id="loanRisk">—</span>
+                <span class="metric-label">Risk Level</span>
+            </div>
+            <div class="metric-card">
+                <span class="metric-big" id="loanSafeEmi">Ksh 0</span>
+                <span class="metric-label">Safe Monthly EMI</span>
+            </div>
+        </div>
+
+        <!-- Score FactoKsh -->
+        <div class="glass-card animate-on-scroll">
+            <h3><i class="fas fa-chart-bar"></i> Score Breakdown</h3>
+            <div id="loanFactors" class="factors-list"></div>
+        </div>
+
+        <!-- Qualifying Countries -->
+        <div class="glass-card animate-on-scroll">
+            <h3><i class="fas fa-globe-africa"></i> Qualifying Countries</h3>
+            <p style="color:var(--text-muted); margin-bottom: 1rem;">Based on your financial health, you qualify for
+                loans in these East African nations:</p>
+            <div id="loanCountries" class="countries-list" style="display: flex; gap: 1rem; flex-wrap: wrap;"></div>
+        </div>
+
+        <!-- Eligible Products -->
+        <div class="glass-card animate-on-scroll">
+            <h3><i class="fas fa-tags"></i> Eligible Microfinance Products</h3>
+            <div id="loanProducts" class="products-grid"></div>
+        </div>
+
+        <!-- Improvement Tips -->
+        <div class="glass-card animate-on-scroll">
+            <h3><i class="fas fa-lightbulb"></i> Improvement Tips</h3>
+            <div id="loanTips" class="recs-list"></div>
+        </div>
+    </div>
+</div>
+{% endblock %}

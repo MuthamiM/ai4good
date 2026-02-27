@@ -1,0 +1,196 @@
+{% extends 'base.html' %}
+{% block title %}Fin AI — Financial Inclusion for Everyone{% endblock %}
+
+{% block content %}
+<!-- ── Hero ──────────────────────────────────────────────────────────── -->
+<section class="hero">
+    <div class="hero-bg-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+    </div>
+
+    <div class="hero-content">
+        <div class="hero-badge animate-fade-in">
+            <i class="fas fa-sparkles"></i> AI-Powered Financial Platform
+        </div>
+        <h1 class="hero-title animate-fade-in">
+            Your Money,<br /><span class="gradient-text">Smarter.</span>
+        </h1>
+        <p class="hero-subtitle animate-fade-in">
+            Fin AI uses artificial intelligence to help underserved communities
+            budget wisely, access microfinance, and build a secure financial future.
+        </p>
+        <div class="hero-cta animate-fade-in">
+            <a href="/dashboard" class="btn btn-primary btn-lg require-auth">
+                <i class="fas fa-rocket"></i> Get Started
+            </a>
+            <a href="/chat" class="btn btn-outline btn-lg">
+                <i class="fas fa-robot"></i> Talk to Fin AI
+            </a>
+        </div>
+
+        <div class="hero-stats animate-fade-in">
+            <div class="stat-item">
+                <span class="stat-number" data-count="5">5</span>
+                <span class="stat-label">AI Modules</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">100%</span>
+                <span class="stat-label">Free to Use</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">24/7</span>
+                <span class="stat-label">AI Assistant</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ── Features ──────────────────────────────────────────────────────── -->
+<section class="section" id="features">
+    <div class="container">
+        <div class="section-header animate-on-scroll">
+            <h2 class="section-title">Powerful <span class="gradient-text">AI Features</span></h2>
+            <p class="section-subtitle">Everything you need to take control of your finances</p>
+        </div>
+
+        <div class="features-grid">
+            <a href="/budget" class="feature-card animate-on-scroll" id="feature-budget">
+                <div class="feature-icon" style="--accent: #6C63FF;">
+                    <i class="fas fa-wallet"></i>
+                </div>
+                <h3>Smart Budget Planner</h3>
+                <p>AI analyzes your income &amp; expenses using the 50/30/20 rule and gives personalized
+                    recommendations.</p>
+                <span class="feature-link">Try it <i class="fas fa-arrow-right"></i></span>
+            </a>
+
+            <a href="/loans" class="feature-card animate-on-scroll" id="feature-loans">
+                <div class="feature-icon" style="--accent: #00D9FF;">
+                    <i class="fas fa-hand-holding-usd"></i>
+                </div>
+                <h3>Loan Eligibility Checker</h3>
+                <p>Get an AI-assessed score and discover microfinance products matched to your financial profile.</p>
+                <span class="feature-link">Check now <i class="fas fa-arrow-right"></i></span>
+            </a>
+
+            <a href="/dashboard" class="feature-card animate-on-scroll" id="feature-expenses">
+                <div class="feature-icon" style="--accent: #FF6B9D;">
+                    <i class="fas fa-tags"></i>
+                </div>
+                <h3>Expense Categorizer</h3>
+                <p>AI auto-categorizes your transactions and reveals hidden spending patterns with actionable insights.
+                </p>
+                <span class="feature-link">Explore <i class="fas fa-arrow-right"></i></span>
+            </a>
+
+            <a href="/savings" class="feature-card animate-on-scroll" id="feature-savings">
+                <div class="feature-icon" style="--accent: #4ECB71;">
+                    <i class="fas fa-piggy-bank"></i>
+                </div>
+                <h3>Savings Goal Planner</h3>
+                <p>Set goals, get investment strategies tailored to your risk level, and track projected growth.</p>
+                <span class="feature-link">Plan now <i class="fas fa-arrow-right"></i></span>
+            </a>
+
+            <a href="/chat" class="feature-card animate-on-scroll" id="feature-chat">
+                <div class="feature-icon" style="--accent: #FFB74D;">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <h3>AI Financial Coach</h3>
+                <p>Chat with our AI assistant for instant guidance on budgeting, investing, debt, taxes, and more.</p>
+                <span class="feature-link">Start chat <i class="fas fa-arrow-right"></i></span>
+            </a>
+
+            <div class="feature-card feature-card-cta animate-on-scroll" id="feature-mission">
+                <div class="feature-icon" style="--accent: #FF6B6B;">
+                    <i class="fas fa-heart"></i>
+                </div>
+                <h3>Our Mission</h3>
+                <p>1.4 billion adults globally lack access to banking. Fin AI bridges the gap with intelligent,
+                    accessible tools.</p>
+                <span class="feature-link highlight">AI for Good <i class="fas fa-arrow-right"></i></span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ── How It Works ──────────────────────────────────────────────────── -->
+<section class="section section-alt" id="how-it-works">
+    <div class="container">
+        <div class="section-header animate-on-scroll">
+            <h2 class="section-title">How <span class="gradient-text">It Works</span></h2>
+            <p class="section-subtitle">Three simple steps to financial empowerment</p>
+        </div>
+
+        <div class="steps-grid">
+            <div class="step-card animate-on-scroll">
+                <div class="step-number">01</div>
+                <h3>Share Your Profile</h3>
+                <p>Enter basic financial details — income, expenses, and goals. Your data stays private and secure.</p>
+            </div>
+            <div class="step-connector animate-on-scroll"><i class="fas fa-arrow-right"></i></div>
+            <div class="step-card animate-on-scroll">
+                <div class="step-number">02</div>
+                <h3>AI Analysis</h3>
+                <p>Our algorithms analyse your data in real time to generate insights, scores, and personalized
+                    recommendations.</p>
+            </div>
+            <div class="step-connector animate-on-scroll"><i class="fas fa-arrow-right"></i></div>
+            <div class="step-card animate-on-scroll">
+                <div class="step-number">03</div>
+                <h3>Take Action</h3>
+                <p>Follow your custom roadmap: optimise spending, access microloans, and grow your savings with
+                    confidence.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ── Impact ────────────────────────────────────────────────────────── -->
+<section class="section" id="impact">
+    <div class="container">
+        <div class="section-header animate-on-scroll">
+            <h2 class="section-title">Designed for <span class="gradient-text">Impact</span></h2>
+            <p class="section-subtitle">Addressing the UN Sustainable Development Goals</p>
+        </div>
+
+        <div class="impact-grid">
+            <div class="impact-card animate-on-scroll">
+                <div class="impact-icon">🎯</div>
+                <h4>SDG 1 — No Poverty</h4>
+                <p>AI-powered budgeting helps families stretch limited income further.</p>
+            </div>
+            <div class="impact-card animate-on-scroll">
+                <div class="impact-icon">🏦</div>
+                <h4>SDG 8 — Decent Work</h4>
+                <p>Microfinance matching empoweKsh entrepreneuKsh to start and grow businesses.</p>
+            </div>
+            <div class="impact-card animate-on-scroll">
+                <div class="impact-icon">⚖️</div>
+                <h4>SDG 10 — Reduced Inequality</h4>
+                <p>Financial literacy tools bridge the knowledge gap for underserved communities.</p>
+            </div>
+            <div class="impact-card animate-on-scroll">
+                <div class="impact-icon">🤝</div>
+                <h4>SDG 17 — Partnerships</h4>
+                <p>Open platform designed for integration with NGOs and community organisations.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ── CTA ───────────────────────────────────────────────────────────── -->
+<section class="section cta-section">
+    <div class="container">
+        <div class="cta-card animate-on-scroll">
+            <h2>Ready to take control of your finances?</h2>
+            <p>Join thousands building a better financial future with Fin AI.</p>
+            <a href="/dashboard" class="btn btn-primary btn-lg require-auth">
+                <i class="fas fa-rocket"></i> Launch Dashboard
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}

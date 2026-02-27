@@ -1,0 +1,609 @@
+{% extends 'base.html' %}
+{% block title %}Complete Your Profile — Fin AI{% endblock %}
+
+{% block content %}
+<style>
+    /* New styling to match the reference image */
+    .onboarding-layout {
+        display: flex;
+        background: #ffffff;
+        border-radius: 16px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+        /* very soft shadow */
+        max-width: 1000px;
+        margin: 2rem auto;
+        overflow: hidden;
+        min-height: 600px;
+    }
+
+    @media(max-width: 768px) {
+        .onboarding-layout {
+            flex-direction: column;
+        }
+
+        .onboarding-sidebar {
+            width: 100% !important;
+            border-right: none !important;
+            border-bottom: 1px solid #e2e8f0;
+            padding: 2rem !important;
+        }
+
+        .onboarding-content {
+            padding: 2rem !important;
+        }
+    }
+
+    .onboarding-sidebar {
+        width: 280px;
+        background: #f8fafc;
+        /* very light gray */
+        padding: 3rem 2rem;
+        border-right: 1px solid #e2e8f0;
+    }
+
+    .onboarding-content {
+        flex: 1;
+        padding: 3rem 4rem;
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* Sidebar Stepper styles */
+    .stepper-label {
+        font-size: 0.75rem;
+        font-weight: 700;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin-bottom: 1rem;
+        margin-top: 2rem;
+    }
+
+    .stepper-item {
+        font-size: 0.95rem;
+        color: #94a3b8;
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+    }
+
+    .stepper-item.completed {
+        color: var(--text-color);
+    }
+
+    .stepper-item.active {
+        font-weight: 600;
+        color: var(--text-color);
+    }
+
+    .stepper-item i {
+        font-size: 0.8rem;
+    }
+
+    /* Dropdown */
+    .doc-dropdown {
+        width: 100%;
+        padding: 0.75rem 1rem;
+        border: 1px solid #cbd5e1;
+        border-radius: 8px;
+        font-size: 0.95rem;
+        color: var(--text-color);
+        background: white;
+        margin-bottom: 2rem;
+        cursor: pointer;
+        outline: none;
+        transition: border-color 0.2s;
+        appearance: none;
+        background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+        background-repeat: no-repeat;
+        background-position: right 1rem center;
+        background-size: 1em;
+    }
+
+    .doc-dropdown:focus {
+        border-color: #10b981;
+        box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+    }
+
+    /* Upload zones */
+    .upload-label {
+        font-size: 0.9rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        display: block;
+    }
+
+    .upload-zone {
+        border: 1px dashed #cbd5e1;
+        background: #f8fafc;
+        border-radius: 8px;
+        padding: 2rem;
+        text-align: center;
+        cursor: pointer;
+        margin-bottom: 1.5rem;
+        transition: all 0.2s ease;
+    }
+
+    .upload-zone:hover {
+        border-color: #10b981;
+        background: #f0fdf4;
+    }
+
+    .upload-zone h4 {
+        font-size: 0.95rem;
+        color: var(--text-color);
+        margin: 0.5rem 0 0.25rem 0;
+    }
+
+    .upload-zone p {
+        font-size: 0.8rem;
+        color: var(--text-muted);
+    }
+
+    /* Uploaded State Box */
+    .uploaded-box {
+        border: 1px solid #e2e8f0;
+        border-radius: 8px;
+        padding: 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 1.5rem;
+        background: white;
+    }
+
+    .uploaded-box-left {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .uploaded-box-icon {
+        background: #f1f5f9;
+        padding: 0.75rem;
+        border-radius: 6px;
+        color: var(--primary-color);
+    }
+
+    .uploaded-box-info h4 {
+        font-size: 0.9rem;
+        margin: 0 0 0.25rem 0;
+    }
+
+    .uploaded-box-info p {
+        font-size: 0.8rem;
+        color: var(--text-muted);
+        margin: 0;
+    }
+
+    /* Action Footer */
+    .action-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: auto;
+        padding-top: 2rem;
+        border-top: 1px solid #e2e8f0;
+    }
+
+    .btn-black {
+        background: #0f172a;
+        color: white;
+        border: none;
+        padding: 0.75rem 1.5rem;
+        border-radius: 30px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background 0.2s;
+        font-size: 0.9rem;
+    }
+
+    .btn-black:hover {
+        background: #1e293b;
+    }
+
+    .btn-black:disabled {
+        background: #cbd5e1;
+        cursor: not-allowed;
+    }
+
+    .btn-outline-pill {
+        background: transparent;
+        border: 1px solid #cbd5e1;
+        color: var(--text-color);
+        padding: 0.75rem 1.5rem;
+        border-radius: 30px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background 0.2s;
+        font-size: 0.9rem;
+    }
+
+    .btn-outline-pill:hover {
+        background: #f8fafc;
+    }
+
+    .btn-text {
+        background: none;
+        border: none;
+        color: var(--text-muted);
+        font-weight: 500;
+        cursor: pointer;
+    }
+
+    .mock-credit-card {
+        background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+        color: white;
+        border-radius: 16px;
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    }
+
+    .mock-credit-card::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background: url('data:image/svg+xml;utf8,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><path d="M0 100 L100 0" stroke="rgba(255,255,255,0.05)" stroke-width="20"/></svg>') repeat;
+        pointer-events: none;
+    }
+
+    .card-chip {
+        width: 40px;
+        height: 30px;
+        background: linear-gradient(135deg, #fbbf24 0%, #d97706 100%);
+        border-radius: 6px;
+        margin-bottom: 1.5rem;
+    }
+
+    .card-number {
+        font-family: monospace;
+        font-size: 1.4rem;
+        letter-spacing: 2px;
+        margin-bottom: 1.5rem;
+    }
+
+    .card-details {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        color: #94a3b8;
+    }
+
+    .card-details>div>div {
+        color: white;
+        font-size: 0.9rem;
+        margin-top: 0.2rem;
+    }
+
+    .card-logo {
+        position: absolute;
+        top: 1.5rem;
+        right: 1.5rem;
+        font-size: 2rem;
+    }
+</style>
+
+<div class="onboarding-layout">
+
+    <!-- Left Sidebar Stepper -->
+    <div class="onboarding-sidebar">
+        <div style="font-weight: 800; color: var(--primary-color); font-size: 1.6rem; margin-bottom: 3rem;">
+            Fin <span class="accent">AI</span>
+        </div>
+
+        <div class="stepper-label">Account Setup</div>
+        <div class="stepper-item completed">
+            <i class="fas fa-check"></i> Primary Details
+        </div>
+        <div class="stepper-item completed">
+            <i class="fas fa-check"></i> Contact Info
+        </div>
+
+        <div class="stepper-label">Verification</div>
+
+        <div class="stepper-item active" id="sidebarStep1">
+            <i class="fas fa-minus"></i> Document
+        </div>
+        <div class="stepper-item" id="sidebarStep2" style="margin-left: -2px;">
+            <i class="fas fa-circle" style="font-size:0.4rem"></i> Income Source
+        </div>
+        <div class="stepper-item" id="sidebarStep3" style="margin-left: -2px;">
+            <i class="fas fa-circle" style="font-size:0.4rem"></i> Finish
+        </div>
+    </div>
+
+    <!-- Right Content Area -->
+    <div class="onboarding-content">
+
+        <!-- STEP 1: KYC Document -->
+        <div id="step1" class="wizard-step active" style="display:flex; flex-direction:column; height: 100%;">
+            <h2 style="font-size: 1.6rem; font-weight: 700; margin-bottom: 2rem;">Verify your identity</h2>
+
+            <p style="font-size: 0.9rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--text-color);">Verify my
+                identity using</p>
+            <select class="doc-dropdown" id="docTypeSelect">
+                <option value="id">Identity Card</option>
+                <option value="driver">Driver's License</option>
+                <option value="passport">Passport</option>
+            </select>
+
+            <label class="upload-label">Front side</label>
+
+            <!-- Upload Zone -->
+            <div class="upload-zone" id="frontDropZone" onclick="document.getElementById('idFileInput').click()">
+                <i class="fas fa-cloud-upload-alt" style="color:#94a3b8; font-size: 1.2rem; margin-bottom:0.8rem;"></i>
+                <h4 style="font-weight:500; margin-top:0;">Click to upload or drag and drop</h4>
+                <p>JPEG, PNG, or PDF formats up to 10MB.</p>
+                <input type="file" id="idFileInput" accept="image/*,.pdf" hidden>
+            </div>
+
+            <!-- Uploaded Box (Hidden initially) -->
+            <div class="uploaded-box hidden" id="frontUploadedBox">
+                <div class="uploaded-box-left">
+                    <div class="uploaded-box-icon"><i class="fas fa-file-pdf"></i></div>
+                    <div class="uploaded-box-info">
+                        <h4 id="uploadedFileName">Identity_Front.pdf</h4>
+                        <p id="uploadedFileProgress">100% • Uploading 3.4/5 MB...</p>
+                    </div>
+                </div>
+                <div class="uploaded-box-right" id="uploadSpinner">
+                    <i class="fas fa-spinner fa-spin" style="color:#10b981; font-size:1.2rem;"></i>
+                </div>
+            </div>
+
+            <label class="upload-label">Back side</label>
+            <div class="upload-zone" style="opacity: 0.5; cursor: not-allowed; padding: 1.5rem;">
+                <p style="margin:0;"><i class="fas fa-lock" style="margin-right:0.5rem;"></i> Available after front
+                    upload</p>
+            </div>
+
+
+            <!-- Action Footer -->
+            <div class="action-footer">
+                <button class="btn-text">Cancel</button>
+                <div style="display:flex; gap:1rem;">
+                    <button class="btn-outline-pill" disabled style="opacity:0.5;">Back</button>
+                    <button class="btn-black" id="btnNext1" disabled>Continue <i class="fas fa-arrow-right"
+                            style="margin-left:0.5rem; font-size: 0.8rem;"></i></button>
+                </div>
+            </div>
+        </div>
+
+        <!-- STEP 2: Income Source -->
+        <div id="step2" class="wizard-step hidden" style="display:flex; flex-direction:column; height: 100%;">
+            <div style="margin-bottom: 2rem;">
+                <h2 style="font-size: 1.6rem; font-weight: 700; margin-bottom: 0.5rem;"><i class="fas fa-lock"
+                        style="color: #10b981;"></i> Link Income Source</h2>
+                <p style="color:var(--text-muted); font-size:0.95rem;">Add the card or bank account where you receive
+                    payments.</p>
+                <div
+                    style="display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(16, 185, 129, 0.1); color: var(--success); padding: 0.4rem 0.8rem; border-radius: 20px; font-size: 0.75rem; margin-top: 1rem; font-weight: 600;">
+                    <i class="fas fa-shield-check"></i> 256-bit Bank Grade Security
+                </div>
+            </div>
+
+            <div class="mock-credit-card">
+                <div class="card-chip"></div>
+                <div class="card-logo"><i class="fab fa-cc-visa"></i></div>
+                <div class="card-number" id="previewCardNum">**** **** **** ****</div>
+                <div class="card-details">
+                    <div class="card-holder">
+                        <span>CARD HOLDER</span>
+                        <div id="previewCardName">YOUR NAME</div>
+                    </div>
+                    <div class="card-expires">
+                        <span>EXPIRES</span>
+                        <div id="previewCardExp">MM/YY</div>
+                    </div>
+                </div>
+            </div>
+
+            <form id="cardForm" class="mt-2">
+                <div class="form-group" style="margin-bottom: 1rem;">
+                    <label class="upload-label">Name on Card</label>
+                    <input type="text" id="cName" class="form-control" placeholder="e.g. Jane Doe" required
+                        style="padding:0.75rem; border-radius:8px; border:1px solid #cbd5e1; width:100%;">
+                </div>
+                <div class="form-group" style="margin-bottom: 1rem;">
+                    <label class="upload-label">Card Number</label>
+                    <input type="text" id="cNumber" class="form-control" placeholder="0000 0000 0000 0000"
+                        maxlength="19" required
+                        style="padding:0.75rem; border-radius:8px; border:1px solid #cbd5e1; width:100%;">
+                </div>
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:1rem;">
+                    <div class="form-group">
+                        <label class="upload-label">Expiry Date</label>
+                        <input type="text" id="cExp" class="form-control" placeholder="MM/YY" maxlength="5" required
+                            style="padding:0.75rem; border-radius:8px; border:1px solid #cbd5e1; width:100%;">
+                    </div>
+                    <div class="form-group">
+                        <label class="upload-label">CVV</label>
+                        <input type="password" id="cCvv" class="form-control" placeholder="***" maxlength="3" required
+                            style="padding:0.75rem; border-radius:8px; border:1px solid #cbd5e1; width:100%;">
+                    </div>
+                </div>
+            </form>
+
+            <div class="action-footer">
+                <button class="btn-text">Cancel</button>
+                <div style="display:flex; gap:1rem;">
+                    <button class="btn-outline-pill" id="btnPrev2" type="button">Back</button>
+                    <button class="btn-black" id="btnNext2" type="button">Securely Link <i class="fas fa-lock"
+                            style="margin-left:0.5rem; font-size: 0.8rem;"></i></button>
+                </div>
+            </div>
+        </div>
+
+        <!-- STEP 3: Finish -->
+        <div id="step3" class="wizard-step hidden"
+            style="display:flex; flex-direction:column; align-items:center; justify-content:center; height: 100%; text-align:center;">
+            <i class="fas fa-check-circle fa-5x" style="color: var(--success); margin-bottom: 1.5rem;"></i>
+            <h2 style="font-size: 2rem; font-weight: 700; margin-bottom: 0.5rem;">Profile Verified!</h2>
+            <p style="color: var(--text-color);">Your identity has been confirmed and your primary income source is
+                linked.</p>
+            <p style="color:var(--text-muted); margin-top: 1rem; font-size: 0.9rem;">You are now fully eligible to apply
+                for our microfinance loan products.</p>
+
+            <a href="/dashboard" class="btn-black"
+                style="margin-top: 2rem; display:inline-flex; align-items:center; gap:0.5rem; text-decoration:none;">
+                <i class="fas fa-chart-pie"></i> Go to Dashboard
+            </a>
+        </div>
+
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script>
+    // Generate QR Code
+    document.addEventListener("DOMContentLoaded", () => {
+        if (document.getElementById("qrcode")) {
+            new QRCode(document.getElementById("qrcode"), {
+                text: window.location.href,
+                width: 130, height: 130,
+                colorDark: "#0f172a", colorLight: "#ffffff",
+                correctLevel: QRCode.CorrectLevel.H
+            });
+        }
+    });
+
+    let idUploaded = false;
+
+    // File Input Logic to mimic UI
+    document.getElementById('idFileInput').addEventListener('change', async (e) => {
+        if (e.target.files.length > 0) {
+            const file = e.target.files[0];
+            const formData = new FormData();
+            formData.append('file', file);
+
+            // Switch UI
+            document.getElementById('frontDropZone').classList.add('hidden');
+            const uploadedBox = document.getElementById('frontUploadedBox');
+            uploadedBox.classList.remove('hidden');
+
+            document.getElementById('uploadedFileName').innerText = file.name;
+            document.getElementById('uploadedFileProgress').innerText = `Uploading ${(file.size / 1024 / 1024).toFixed(2)} MB... Processing CRB`;
+            const spinner = document.getElementById('uploadSpinner');
+            spinner.innerHTML = '<i class="fas fa-spinner fa-spin" style="color:#10b981; font-size:1.2rem;"></i>';
+
+            try {
+                const res = await fetch('/api/onboarding/kyc', { method: 'POST', body: formData });
+                const data = await res.json();
+
+                if (data.success) {
+                    spinner.innerHTML = '<i class="fas fa-check-circle" style="color:#10b981; font-size:1.2rem;"></i>';
+                    document.getElementById('uploadedFileProgress').innerText = `CRB Verified (Score: ${data.crb_score})`;
+                    document.getElementById('uploadedFileProgress').style.color = "#10b981";
+                    idUploaded = true;
+                    document.getElementById('btnNext1').disabled = false;
+                } else {
+                    spinner.innerHTML = '<i class="fas fa-exclamation-circle" style="color:#ef4444; font-size:1.2rem;"></i>';
+                    document.getElementById('uploadedFileProgress').innerText = `Upload Error`;
+                    document.getElementById('uploadedFileProgress').style.color = "#ef4444";
+                }
+            } catch (e) {
+                console.error(e);
+            }
+        }
+    });
+
+
+    // Wizard Navigation logic
+    document.getElementById('btnNext1').addEventListener('click', () => {
+        document.getElementById('step1').classList.add('hidden');
+        document.getElementById('step2').classList.remove('hidden');
+
+        // Update sidebar
+        document.getElementById('sidebarStep1').classList.remove('active');
+        document.getElementById('sidebarStep1').classList.add('completed');
+        document.getElementById('sidebarStep1').innerHTML = '<i class="fas fa-check"></i> Document';
+
+        document.getElementById('sidebarStep2').classList.add('active');
+        document.getElementById('sidebarStep2').innerHTML = '<i class="fas fa-minus"></i> Income Source';
+    });
+
+    document.getElementById('btnPrev2').addEventListener('click', () => {
+        document.getElementById('step2').classList.add('hidden');
+        document.getElementById('step1').classList.remove('hidden');
+
+        document.getElementById('sidebarStep2').classList.remove('active');
+        document.getElementById('sidebarStep2').innerHTML = '<i class="fas fa-circle" style="font-size:0.4rem"></i> Income Source';
+
+        document.getElementById('sidebarStep1').classList.remove('completed');
+        document.getElementById('sidebarStep1').classList.add('active');
+        document.getElementById('sidebarStep1').innerHTML = '<i class="fas fa-minus"></i> Document';
+    });
+
+    document.getElementById('btnNext2').addEventListener('click', async () => {
+        if (!document.getElementById('cardForm').checkValidity()) {
+            document.getElementById('cardForm').reportValidity();
+            return;
+        }
+
+        const cardData = {
+            name: document.getElementById('cName').value,
+            number: document.getElementById('cNumber').value,
+            exp: document.getElementById('cExp').value,
+            cvv: document.getElementById('cCvv').value
+        };
+
+        const btn = document.getElementById('btnNext2');
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Linking...';
+        btn.disabled = true;
+
+        try {
+            const res = await fetch('/api/onboarding/card', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(cardData)
+            });
+            const data = await res.json();
+            if (data.success) {
+                document.getElementById('step2').classList.add('hidden');
+                document.getElementById('step3').classList.remove('hidden');
+
+                document.getElementById('sidebarStep2').classList.remove('active');
+                document.getElementById('sidebarStep2').classList.add('completed');
+                document.getElementById('sidebarStep2').innerHTML = '<i class="fas fa-check"></i> Income Source';
+
+                document.getElementById('sidebarStep3').classList.add('active');
+                document.getElementById('sidebarStep3').innerHTML = '<i class="fas fa-check"></i> Finish';
+
+                // Set localStorage flag to prevent onboarding loop on dashboard
+                localStorage.setItem('kycComplete', 'true');
+            }
+        } catch (e) {
+            console.error(e);
+            btn.innerHTML = 'Securely Link <i class="fas fa-lock" style="margin-left:0.5rem; font-size:0.8rem;"></i>';
+            btn.disabled = false;
+        }
+    });
+
+    // Credit Card Preview Sync
+    document.getElementById('cName').addEventListener('input', (e) => {
+        document.getElementById('previewCardName').innerText = e.target.value || 'YOUR NAME';
+    });
+    document.getElementById('cNumber').addEventListener('input', (e) => {
+        let val = e.target.value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
+        let formatted = val.match(/.{1,4}/g)?.join(' ') || '';
+        e.target.value = formatted;
+        document.getElementById('previewCardNum').innerText = formatted || '**** **** **** ****';
+    });
+    document.getElementById('cExp').addEventListener('input', (e) => {
+        let val = e.target.value.replace(/[^0-9]/gi, '');
+        if (val.length >= 2) {
+            val = val.substring(0, 2) + '/' + val.substring(2, 4);
+        }
+        e.target.value = val;
+        document.getElementById('previewCardExp').innerText = val || 'MM/YY';
+    });
+</script>
+{% endblock %}

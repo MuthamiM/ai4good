@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+{% block title %}AI Financial Coach — Fin AI{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <h1><i class="fas fa-robot"></i> AI Financial Coach</h1>
+    <p>Get instant answeKsh on budgeting, investing, loans, and more</p>
+</section>
+
+<div class="chat-container">
+    <div class="chat-window glass-card">
+        <!-- Messages area with mock conversation -->
+        <div class="chat-messages" id="chatMessages">
+            <!-- Welcome -->
+            <div class="chat-msg bot">
+                <div class="chat-avatar"><i class="fas fa-robot"></i></div>
+                <div class="chat-bubble">
+                    <p>Hello! I'm your <strong>Fin AI</strong> financial coach. I can help you with:</p>
+                    <ul>
+                        <li>Budgeting and expense management</li>
+                        <li>Savings strategies and goal planning</li>
+                        <li>Loan eligibility and microfinance</li>
+                        <li>Investment basics (SIP, FD, mutual funds)</li>
+                        <li>Debt management and repayment</li>
+                        <li>Insurance and tax planning</li>
+                    </ul>
+                    <p>What would you like to know?</p>
+                </div>
+            </div>
+
+
+        </div>
+
+        <!-- Quick replies (no emojis) -->
+        <div class="chat-quick-replies" id="quickReplies">
+            <button class="quick-reply" data-msg="How do I start budgeting?">How do I start budgeting?</button>
+            <button class="quick-reply" data-msg="What is an emergency fund?">What is an emergency fund?</button>
+            <button class="quick-reply" data-msg="How to improve loan eligibility?">How to improve loan
+                eligibility?</button>
+            <button class="quick-reply" data-msg="Best ways to save money?">Best ways to save money?</button>
+        </div>
+
+        <!-- Input -->
+        <form class="chat-input-area" id="chatForm">
+            <input type="text" id="chatInput" placeholder="Ask me about personal finance..." autocomplete="off" />
+            <button type="submit" class="btn btn-primary" id="chatSend">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </form>
+    </div>
+
+    <!-- Sidebar tips (no emojis) -->
+    <div class="chat-sidebar glass-card">
+        <h3><i class="fas fa-lightbulb"></i> Quick Tips</h3>
+        <div class="tip-card">
+            <div class="tip-icon"><i class="fas fa-chart-pie" style="color:#2563eb"></i></div>
+            <div class="tip-text">
+                <strong>50/30/20 Rule</strong>
+                <p>Allocate 50% to needs, 30% to wants, and 20% to savings.</p>
+            </div>
+        </div>
+        <div class="tip-card">
+            <div class="tip-icon"><i class="fas fa-shield-alt" style="color:#16a34a"></i></div>
+            <div class="tip-text">
+                <strong>Emergency Fund</strong>
+                <p>Save 3-6 months of expenses for unexpected situations.</p>
+            </div>
+        </div>
+        <div class="tip-card">
+            <div class="tip-icon"><i class="fas fa-chart-line" style="color:#ea580c"></i></div>
+            <div class="tip-text">
+                <strong>Rule of 72</strong>
+                <p>Divide 72 by return rate to find yeaKsh to double your money.</p>
+            </div>
+        </div>
+        <div class="tip-card">
+            <div class="tip-icon"><i class="fas fa-piggy-bank" style="color:#9333ea"></i></div>
+            <div class="tip-text">
+                <strong>Pay Yourself First</strong>
+                <p>Automate savings on payday before spending on anything else.</p>
+            </div>
+        </div>
+
+        <h3 style="margin-top:1.5rem;"><i class="fas fa-chart-bar"></i> Session Metrics</h3>
+        <div class="session-metrics">
+            <div class="session-metric">
+                <span class="session-metric-value" id="msgCount">0</span>
+                <span class="session-metric-label">Questions Asked</span>
+            </div>
+            <div class="session-metric">
+                <span class="session-metric-value" id="topicCount">0</span>
+                <span class="session-metric-label">Topics Covered</span>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

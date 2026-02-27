@@ -1,0 +1,140 @@
+{% extends 'base.html' %}
+{% block title %}Budget Planner — Fin AI{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <h1><i class="fas fa-wallet"></i> AI Budget Planner</h1>
+    <p>Optimize your spending with the 50/30/20 rule and AI-powered insights</p>
+</section>
+
+<div class="tool-container">
+    <!-- Input Form -->
+    <div class="glass-card animate-on-scroll">
+        <h2><i class="fas fa-edit"></i> Enter Your Financial Details</h2>
+        <form id="budgetForm" class="form-grid-2">
+            <div class="form-group form-full">
+                <label for="bIncome"><i class="fas fa-rupee-sign"></i> Monthly Income (Ksh )</label>
+                <input type="number" id="bIncome" placeholder="e.g. 30000" required />
+            </div>
+
+            <div class="form-divider"><span>Needs (Essentials)</span></div>
+            <div class="form-group">
+                <label for="bHousing"><i class="fas fa-home"></i> Housing / Rent</label>
+                <input type="number" id="bHousing" value="0" />
+            </div>
+            <div class="form-group">
+                <label for="bUtilities"><i class="fas fa-lightbulb"></i> Utilities</label>
+                <input type="number" id="bUtilities" value="0" />
+            </div>
+            <div class="form-group">
+                <label for="bGroceries"><i class="fas fa-shopping-basket"></i> Groceries</label>
+                <input type="number" id="bGroceries" value="0" />
+            </div>
+            <div class="form-group">
+                <label for="bTransport"><i class="fas fa-bus"></i> Transportation</label>
+                <input type="number" id="bTransport" value="0" />
+            </div>
+            <div class="form-group">
+                <label for="bInsurance"><i class="fas fa-shield-alt"></i> Insurance</label>
+                <input type="number" id="bInsurance" value="0" />
+            </div>
+            <div class="form-group">
+                <label for="bHealthcare"><i class="fas fa-heartbeat"></i> Healthcare</label>
+                <input type="number" id="bHealthcare" value="0" />
+            </div>
+
+            <div class="form-divider"><span>Wants (Discretionary)</span></div>
+            <div class="form-group">
+                <label for="bEntertain"><i class="fas fa-film"></i> Entertainment</label>
+                <input type="number" id="bEntertain" value="0" />
+            </div>
+            <div class="form-group">
+                <label for="bDining"><i class="fas fa-utensils"></i> Dining Out</label>
+                <input type="number" id="bDining" value="0" />
+            </div>
+            <div class="form-group">
+                <label for="bShopping"><i class="fas fa-shopping-bag"></i> Shopping</label>
+                <input type="number" id="bShopping" value="0" />
+            </div>
+            <div class="form-group">
+                <label for="bSubscriptions"><i class="fas fa-tv"></i> Subscriptions</label>
+                <input type="number" id="bSubscriptions" value="0" />
+            </div>
+
+            <div class="form-divider"><span>Savings &amp; Debt</span></div>
+            <div class="form-group">
+                <label for="bSavings"><i class="fas fa-piggy-bank"></i> Savings / Investments</label>
+                <input type="number" id="bSavings" value="0" />
+            </div>
+            <div class="form-group">
+                <label for="bDebt"><i class="fas fa-credit-card"></i> Debt / EMI Payments</label>
+                <input type="number" id="bDebt" value="0" />
+            </div>
+
+            <div class="form-full">
+                <button type="submit" class="btn btn-primary btn-lg">
+                    <i class="fas fa-magic"></i> Analyze Budget
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Results (hidden until submit) -->
+    <div class="hidden" id="budgetResults">
+
+        <!-- Metrics Row -->
+        <div class="metrics-row animate-on-scroll">
+            <div class="metric-card">
+                <div class="metric-ring" id="healthRing">
+                    <svg viewBox="0 0 120 120">
+                        <circle cx="60" cy="60" r="52" class="ring-bg" />
+                        <circle cx="60" cy="60" r="52" class="ring-fill" id="healthCircle" />
+                    </svg>
+                    <span class="metric-ring-value" id="healthScore">0</span>
+                </div>
+                <span class="metric-label">Health Score</span>
+            </div>
+            <div class="metric-card">
+                <span class="metric-big" id="metricRemaining">Ksh 0</span>
+                <span class="metric-label">Monthly Surplus</span>
+            </div>
+            <div class="metric-card">
+                <span class="metric-big" id="metricRisk">—</span>
+                <span class="metric-label">Risk Level</span>
+            </div>
+            <div class="metric-card">
+                <span class="metric-big" id="metricSaveRate">0%</span>
+                <span class="metric-label">Savings Rate</span>
+            </div>
+        </div>
+
+        <!-- Charts -->
+        <div class="charts-row animate-on-scroll">
+            <div class="glass-card">
+                <h3><i class="fas fa-chart-doughnut"></i> Spending Breakdown</h3>
+                <div class="chart-wrapper">
+                    <canvas id="budgetDonut"></canvas>
+                </div>
+            </div>
+            <div class="glass-card">
+                <h3><i class="fas fa-chart-bar"></i> Actual vs Ideal (50/30/20)</h3>
+                <div class="chart-wrapper">
+                    <canvas id="budgetBar"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recommendations -->
+        <div class="glass-card animate-on-scroll">
+            <h3><i class="fas fa-lightbulb"></i> AI Recommendations</h3>
+            <div id="budgetRecs" class="recs-list"></div>
+        </div>
+
+        <!-- Optimized Budget -->
+        <div class="glass-card animate-on-scroll">
+            <h3><i class="fas fa-magic"></i> AI-Optimized Budget</h3>
+            <div id="optimizedBudget" class="optimized-grid"></div>
+        </div>
+    </div>
+</div>
+{% endblock %}

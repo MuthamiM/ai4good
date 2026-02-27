@@ -1,0 +1,238 @@
+{% extends 'base.html' %}
+{% block title %}Risk & Analytics — Fin AI{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <h1><i class="fas fa-chart-line"></i> Risk &amp; Analytics</h1>
+    <p>Fixed-income risk, balance-sheet valuation, and decision-impact analysis</p>
+</section>
+
+<div class="tool-container">
+    <!-- Tab Navigation -->
+    <div class="analytics-tabs glass-card" style="padding:0.5rem">
+        <button class="tab-btn active" data-tab="fixedIncome"><i class="fas fa-percentage"></i> Fixed-Income
+            Risk</button>
+        <button class="tab-btn" data-tab="balanceSheet"><i class="fas fa-balance-scale"></i> Balance Sheet</button>
+        <button class="tab-btn" data-tab="decisionImpact"><i class="fas fa-project-diagram"></i> Decision
+            Impact</button>
+    </div>
+
+    <!-- ═══ TAB 1 : Fixed-Income Risk ═══════════════════════════════ -->
+    <div class="tab-panel active" id="tab-fixedIncome">
+        <div class="glass-card animate-on-scroll">
+            <h2><i class="fas fa-percentage"></i> Fixed-Income Holdings</h2>
+            <p style="color:var(--text-secondary);margin-bottom:1rem;">Add your FDs, bonds, or recurring deposits to
+                analyze risk &amp; optimize returns.</p>
+
+            <div id="holdingsList">
+                <div class="holding-row form-grid-2">
+                    <div class="form-group"><label>Name</label><input type="text" class="h-name"
+                            placeholder="e.g. SBI FD" /></div>
+                    <div class="form-group"><label>Principal (Ksh )</label><input type="number" class="h-principal"
+                            placeholder="50000" /></div>
+                    <div class="form-group"><label>Interest Rate (%)</label><input type="number" class="h-rate"
+                            placeholder="7" step="0.1" /></div>
+                    <div class="form-group"><label>Tenure (years)</label><input type="number" class="h-tenure"
+                            placeholder="3" step="0.5" /></div>
+                </div>
+            </div>
+
+            <div style="display:flex;gap:1rem;margin-top:1rem;flex-wrap:wrap">
+                <button class="btn btn-outline btn-sm" id="addHolding"><i class="fas fa-plus"></i> Add Holding</button>
+                <button class="btn btn-primary btn-lg" id="analyzeFixedIncome"><i class="fas fa-calculator"></i> Analyze
+                    Risk</button>
+            </div>
+        </div>
+
+        <div class="hidden" id="fiResults">
+            <div class="metrics-row animate-on-scroll">
+                <div class="metric-card">
+                    <div class="metric-ring"><svg viewBox="0 0 120 120">
+                            <circle cx="60" cy="60" r="52" class="ring-bg" />
+                            <circle cx="60" cy="60" r="52" class="ring-fill" id="fiRiskCircle" />
+                        </svg><span class="metric-ring-value" id="fiRiskScore">0</span></div>
+                    <span class="metric-label">Risk Score</span>
+                </div>
+                <div class="metric-card"><span class="metric-big" id="fiTotal">Ksh 0</span><span class="metric-label">Total
+                        Invested</span></div>
+                <div class="metric-card"><span class="metric-big" id="fiReturn">Ksh 0</span><span
+                        class="metric-label">Portfolio Return</span></div>
+                <div class="metric-card"><span class="metric-big" id="fiAvgRate">0%</span><span class="metric-label">Avg
+                        Yield</span></div>
+            </div>
+            <div class="glass-card animate-on-scroll">
+                <h3><i class="fas fa-table"></i> Holdings Analysis</h3>
+                <div class="table-responsive">
+                    <table class="data-table" id="fiTable">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Principal</th>
+                                <th>Rate</th>
+                                <th>Duration</th>
+                                <th>Sensitivity</th>
+                                <th>Maturity Value</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="glass-card animate-on-scroll">
+                <h3><i class="fas fa-lightbulb"></i> Optimization Recommendations</h3>
+                <div id="fiRecs" class="recs-list"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══ TAB 2 : Balance Sheet ═══════════════════════════════════ -->
+    <div class="tab-panel" id="tab-balanceSheet">
+        <div class="glass-card animate-on-scroll">
+            <h2><i class="fas fa-balance-scale"></i> Personal Balance Sheet</h2>
+            <form id="bsForm" class="form-grid-2">
+                <div class="form-divider"><span>Assets</span></div>
+                <div class="form-group"><label><i class="fas fa-rupee-sign"></i> Cash &amp; Savings</label><input
+                        type="number" id="bsCash" value="0" /></div>
+                <div class="form-group"><label><i class="fas fa-chart-line"></i> Investments (MF, Stocks)</label><input
+                        type="number" id="bsInvest" value="0" /></div>
+                <div class="form-group"><label><i class="fas fa-home"></i> Property Value</label><input type="number"
+                        id="bsProperty" value="0" /></div>
+                <div class="form-group"><label><i class="fas fa-car"></i> Vehicles</label><input type="number"
+                        id="bsVehicles" value="0" /></div>
+                <div class="form-group"><label><i class="fas fa-gem"></i> Gold &amp; Jewelry</label><input type="number"
+                        id="bsGold" value="0" /></div>
+                <div class="form-group"><label><i class="fas fa-box"></i> Other Assets</label><input type="number"
+                        id="bsOtherA" value="0" /></div>
+
+                <div class="form-divider"><span>Liabilities</span></div>
+                <div class="form-group"><label><i class="fas fa-home"></i> Home Loan</label><input type="number"
+                        id="bsHomeLoan" value="0" /></div>
+                <div class="form-group"><label><i class="fas fa-car"></i> Vehicle Loan</label><input type="number"
+                        id="bsVehicleLoan" value="0" /></div>
+                <div class="form-group"><label><i class="fas fa-user"></i> Personal Loan</label><input type="number"
+                        id="bsPersonalLoan" value="0" /></div>
+                <div class="form-group"><label><i class="fas fa-credit-card"></i> Credit Card Debt</label><input
+                        type="number" id="bsCreditCard" value="0" /></div>
+                <div class="form-group"><label><i class="fas fa-box"></i> Other Liabilities</label><input type="number"
+                        id="bsOtherL" value="0" /></div>
+                <div class="form-group"><label><i class="fas fa-rupee-sign"></i> Monthly Income</label><input
+                        type="number" id="bsIncome" placeholder="30000" /></div>
+
+                <div class="form-full"><button type="submit" class="btn btn-primary btn-lg"><i
+                            class="fas fa-calculator"></i> Compute Valuation</button></div>
+            </form>
+        </div>
+
+        <div class="hidden" id="bsResults">
+            <div class="metrics-row animate-on-scroll">
+                <div class="metric-card">
+                    <div class="metric-ring"><svg viewBox="0 0 120 120">
+                            <circle cx="60" cy="60" r="52" class="ring-bg" />
+                            <circle cx="60" cy="60" r="52" class="ring-fill" id="bsScoreCircle" />
+                        </svg><span class="metric-ring-value" id="bsScore">0</span></div>
+                    <span class="metric-label">Valuation Score</span>
+                </div>
+                <div class="metric-card"><span class="metric-big" id="bsNetWorth">Ksh 0</span><span
+                        class="metric-label">Net Worth</span></div>
+                <div class="metric-card"><span class="metric-big" id="bsSolvency">0%</span><span
+                        class="metric-label">Solvency Ratio</span></div>
+                <div class="metric-card"><span class="metric-big" id="bsRunway">0</span><span
+                        class="metric-label">Months Runway</span></div>
+            </div>
+            <div class="charts-row animate-on-scroll">
+                <div class="glass-card">
+                    <h3><i class="fas fa-chart-pie"></i> Asset Breakdown</h3>
+                    <div class="chart-wrapper"><canvas id="assetChart"></canvas></div>
+                </div>
+                <div class="glass-card">
+                    <h3><i class="fas fa-chart-pie"></i> Liability Breakdown</h3>
+                    <div class="chart-wrapper"><canvas id="liabilityChart"></canvas></div>
+                </div>
+            </div>
+            <div class="glass-card animate-on-scroll">
+                <h3><i class="fas fa-lightbulb"></i> Valuation Insights</h3>
+                <div id="bsInsights" class="recs-list"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══ TAB 3 : Decision Impact ═════════════════════════════════ -->
+    <div class="tab-panel" id="tab-decisionImpact">
+        <div class="glass-card animate-on-scroll">
+            <h2><i class="fas fa-project-diagram"></i> Decision Impact Simulator</h2>
+            <p style="color:var(--text-secondary);margin-bottom:1rem;">Simulate how a financial decision will affect
+                your cash flow and net position.</p>
+            <form id="diForm" class="form-grid-2">
+                <div class="form-group form-full">
+                    <label><i class="fas fa-tags"></i> Decision Type</label>
+                    <div class="radio-group">
+                        <label class="radio-card"><input type="radio" name="diType" value="loan" checked />
+                            <div class="radio-content"><i class="fas fa-hand-holding-usd"></i><span>Take a
+                                    Loan</span><small>Borrow money</small></div>
+                        </label>
+                        <label class="radio-card"><input type="radio" name="diType" value="investment" />
+                            <div class="radio-content"><i class="fas fa-chart-line"></i><span>Make
+                                    Investment</span><small>Deploy capital</small></div>
+                        </label>
+                        <label class="radio-card"><input type="radio" name="diType" value="expense" />
+                            <div class="radio-content"><i class="fas fa-shopping-cart"></i><span>Major
+                                    Expense</span><small>Big purchase</small></div>
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group"><label><i class="fas fa-rupee-sign"></i> Amount (Ksh )</label><input type="number"
+                        id="diAmount" placeholder="100000" required /></div>
+                <div class="form-group"><label><i class="fas fa-percentage"></i> Interest Rate (%)</label><input
+                        type="number" id="diRate" value="10" step="0.1" /></div>
+                <div class="form-group"><label><i class="fas fa-calendar-alt"></i> Tenure (months)</label><input
+                        type="number" id="diTenure" value="12" /></div>
+                <div class="form-group"><label><i class="fas fa-rupee-sign"></i> Monthly Income</label><input
+                        type="number" id="diIncome" placeholder="30000" required /></div>
+                <div class="form-group"><label><i class="fas fa-shopping-cart"></i> Monthly Expenses</label><input
+                        type="number" id="diExpenses" placeholder="20000" required /></div>
+                <div class="form-group"><label><i class="fas fa-piggy-bank"></i> Current Savings</label><input
+                        type="number" id="diSavings" value="0" /></div>
+                <div class="form-group"><label><i class="fas fa-credit-card"></i> Current Debt</label><input
+                        type="number" id="diDebt" value="0" /></div>
+                <div class="form-full"><button type="submit" class="btn btn-primary btn-lg"><i class="fas fa-play"></i>
+                        Simulate Impact</button></div>
+            </form>
+        </div>
+
+        <div class="hidden" id="diResults">
+            <div class="metrics-row animate-on-scroll">
+                <div class="metric-card">
+                    <div class="metric-ring"><svg viewBox="0 0 120 120">
+                            <circle cx="60" cy="60" r="52" class="ring-bg" />
+                            <circle cx="60" cy="60" r="52" class="ring-fill" id="diScoreCircle" />
+                        </svg><span class="metric-ring-value" id="diScore">0</span></div>
+                    <span class="metric-label">Impact Score</span>
+                </div>
+                <div class="metric-card"><span class="metric-big" id="diVerdict">—</span><span
+                        class="metric-label">Verdict</span></div>
+                <div class="metric-card"><span class="metric-big" id="diMonthly">Ksh 0</span><span
+                        class="metric-label">Monthly Impact</span></div>
+                <div class="metric-card"><span class="metric-big" id="diSurplus">Ksh 0</span><span class="metric-label">New
+                        Surplus</span></div>
+            </div>
+
+            <!-- Before vs After -->
+            <div class="charts-row animate-on-scroll">
+                <div class="glass-card">
+                    <h3><i class="fas fa-exchange-alt"></i> Before vs After</h3>
+                    <div class="chart-wrapper"><canvas id="beforeAfterChart"></canvas></div>
+                </div>
+                <div class="glass-card">
+                    <h3><i class="fas fa-chart-line"></i> Projection Timeline</h3>
+                    <div class="chart-wrapper"><canvas id="timelineChart"></canvas></div>
+                </div>
+            </div>
+
+            <div class="glass-card animate-on-scroll">
+                <h3><i class="fas fa-exclamation-triangle"></i> Risk Indicators</h3>
+                <div id="diRisks" class="recs-list"></div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
