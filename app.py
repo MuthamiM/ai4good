@@ -1,7 +1,8 @@
-from flask import Flask, render_template, request, jsonify
 import os
 import sqlite3
 import random
+from datetime import timedelta
+from flask import Flask, render_template, request, jsonify, session
 from werkzeug.utils import secure_filename
 
 from ai_engine.budget_analyzer import BudgetAnalyzer
@@ -12,7 +13,16 @@ from ai_engine.chatbot import FinancialChatbot
 from ai_engine.risk_optimization import RiskOptimizationEngine
 
 app = Flask(__name__)
-app.secret_key = os.urandom(24)
+
+# Fixed Secret Key for stable sessions (prevents logout on server restart)
+app.secret_key = os.environ.get('FLASK_SECRET_KEY', 'dev_fallback_key_123')
+
+# Set session persistence to 3 days
+app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=3)
+
+@app.before_request
+def make_session_permanent():
+    session.permanent = True
 
 # Initialize AI engines
 budget_analyzer = BudgetAnalyzer()
