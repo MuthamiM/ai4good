@@ -1,0 +1,26 @@
+{
+  "__pycache__": {
+    "type": "directory",
+    "url": "https://www.pythonanywhere.com/api/v0/user/Mussa21/files/path/home/Mussa21/flowledger-ai/__pycache__"
+  },
+  "app.py": {
+    "type": "file",
+    "url": "https://www.pythonanywhere.com/api/v0/user/Mussa21/files/path/home/Mussa21/flowledger-ai/app.py"
+  },
+  "requirements.txt": {
+    "type": "file",
+    "url": "https://www.pythonanywhere.com/api/v0/user/Mussa21/files/path/home/Mussa21/flowledger-ai/requirements.txt"
+  },
+  "static": {
+    "type": "directory",
+    "url": "https://www.pythonanywhere.com/api/v0/user/Mussa21/files/path/home/Mussa21/flowledger-ai/static"
+  },
+  "templates": {
+    "type": "directory",
+    "url": "https://www.pythonanywhere.com/api/v0/user/Mussa21/files/path/home/Mussa21/flowledger-ai/templates"
+  },
+  "uploads": {
+    "type": "directory",
+    "url": "https://www.pythonanywhere.com/api/v0/user/Mussa21/files/path/home/Mussa21/flowledger-ai/uploads"
+  }
+}
