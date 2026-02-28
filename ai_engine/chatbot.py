@@ -81,6 +81,8 @@ class FinancialChatbot:
                 headers={
                     'Authorization': f'Bearer {OPENROUTER_API_KEY}',
                     'Content-Type': 'application/json',
+                    'HTTP-Referer': 'https://mussa21.pythonanywhere.com',
+                    'X-Title': 'FinWise AI',
                 },
                 json={
                     'model': 'openai/gpt-4o-mini',
@@ -118,54 +120,44 @@ class FinancialChatbot:
         return replies
 
     #  Local fallback 
-    def _local_response(self, message: str) -> dict:
-        kb = {
-            'budget': {
-                'kw': ['budget', 'budgeting', 'spending', 'expense'],
-                'ans': [
-                    'Based on your data, you spend about Ksh 8,065 on rent and Ksh 5,101 on groceries. According to the 50/30/20 rule, your needs are well within the 50% limit of your Ksh 30,000 income. Try cutting back on dining out (Ksh 2,031) to reach a 20% savings rate.',
-                    'Your current savings rate is 13.3% (Ksh 4,001). To hit the 20% goal (Ksh 6,000), consider reducing discretionary spending like entertainment and dining.',
-                ],
-            },
-            'savings': {
-                'kw': ['save', 'saving', 'savings', 'emergency fund'],
-                'ans': [
-                    'You are saving Ksh 4,001 per month. At this rate, building a 3-month emergency fund (approx Ksh 78,000) will take about 20 months. Increase savings to Ksh 6,000 to reach it in 13 months.',
-                    'Your savings rate of 13.3% is good, but automating an extra Ksh 2,000 from your Ksh 30,000 income will significantly boost your wealth over time.',
-                ],
-            },
-            'loan': {
-                'kw': ['loan', 'borrow', 'credit', 'emi', 'microfinance'],
-                'ans': [
-                    'With an income of Ksh 30,000 and total expenses around Ksh 26,000, your free cash flow is limited to Ksh 4,000. Ensure any new EMI does not exceed this amount.',
-                ],
-            },
-            'investment': {
-                'kw': ['invest', 'sip', 'mutual fund', 'fd', 'stock'],
-                'ans': [
-                    'You are saving Ksh 4,001 monthly. Redirecting even half of this (Ksh 2,000) into a SIP in index funds can compound significantly over the next 10-15 years.',
-                ],
-            },
-            'greeting': {
-                'kw': ['hello', 'hi', 'hey', 'namaste'],
-                'ans': ['Hello. I am Fin AI. I have analyzed your dashboard data (Income: Ksh 30,000, Savings: 13.3%). How can I help you optimize your finances today?'],
-            },
-        }
+    def _local_response(self, message):
+        """Conversational fallback when API is down."""
+        msg_low = message.lower()
+        
+        # Identity / General Greetings
+        if any(w in msg_low for w in ['who are you', 'what are you', 'how are you', 'your name']):
+            return {
+                'response': "I am Fin AI, your intelligent financial coach. I can help you with budgeting, savings analysis, or general questions you may have. How can I assist you today?",
+                'quick_replies': self.quick_replies[:4],
+                'category': 'general',
+            }
+        
+        if any(w in msg_low for w in ['hello', 'hi', 'hey']):
+            return {
+                'response': "Hello! I am Fin AI. I have analyzed your dashboard data and I am ready to help you optimize your finances or answer any general questions. What is on your mind?",
+                'quick_replies': self.quick_replies[:4],
+                'category': 'greeting',
+            }
 
-        msg = message.lower()
-        best, best_n = None, 0
-        for cat, info in kb.items():
-            n = sum(1 for kw in info['kw'] if kw in msg)
-            if n > best_n:
-                best_n, best = n, cat
+        # Mission / SDG
+        if any(w in msg_low for w in ['sdg', 'mission', 'good', 'hackathon']):
+            return {
+                'response': "Our mission is to empower financial inclusion through AI. We align with SDG 1 (No Poverty) by providing tools to manage debt and SDG 17 (Partnerships) by building community-driven financial literacy for the AI for Good Hackathon 2026.",
+                'quick_replies': self.quick_replies[:4],
+                'category': 'general',
+            }
 
-        if best:
-            resp = random.choice(kb[best]['ans'])
-        else:
-            resp = "I have access to your budget data. Ask me how to improve your 13.3% savings rate or cut your expenses."
+        # Analysis Fallback
+        if any(w in msg_low for w in ['budget', 'income', 'save', 'money', 'rent', 'expense']):
+            return {
+                'response': "Based on your dashboard, your current savings rate is 13.3% (Ksh 4,000). I recommend trying to cut your Dining Out or Entertainment expenses to reach a 20% savings goal. Would you like a breakdown of those categories?",
+                'quick_replies': ['How to cut dining out?', 'What is 20% savings goal?', 'Show my expenses'],
+                'category': 'financial',
+            }
 
+        # General Catch-all
         return {
-            'response': resp,
+            'response': "I am currently in high-performance mode. While I am waiting for my full neural uplink (OpenRouter API), I can still discuss your budget, our AI mission, or basic financial concepts. What would you like to explore?",
             'quick_replies': self.quick_replies[:4],
-            'category': best or 'general',
+            'category': 'general',
         }
