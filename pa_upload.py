@@ -10,7 +10,7 @@ HEADERS = {"Authorization": f"Token {TOKEN}"}
 LOCAL_DIR = r"c:\Users\Admin\Desktop\aiforgood"
 
 # Files and folders to EXCLUDE
-EXCLUDE = {".git", ".wrangler", "node_modules", "__pycache__", ".env", "venv", "pa_dir_list.txt", "pa_flowledger_list.txt", "pa_flowledger_reqs.txt", "pa_user_info.txt", "get_logs.py", "pa_deploy.py", "pa_test.py", "test_clone.py", "check_internet.py", "debug_pa.py", "debug_clone.py", "cleanup_consoles.py"}
+EXCLUDE = {".git", ".wrangler", "node_modules", "__pycache__", "venv", "pa_dir_list.txt", "pa_flowledger_list.txt", "pa_flowledger_reqs.txt", "pa_user_info.txt", "get_logs.py", "pa_deploy.py", "pa_test.py", "test_clone.py", "check_internet.py", "debug_pa.py", "debug_clone.py", "cleanup_consoles.py", "pa_upload.py", "pa_finish.py", "remove_emojis.py"}
 
 def upload_file(local_path, remote_path):
     print(f"Uploading: {remote_path}")

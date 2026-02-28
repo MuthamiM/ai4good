@@ -3,6 +3,9 @@ import sqlite3
 import random
 from datetime import timedelta
 from flask import Flask, render_template, request, jsonify, session
+from dotenv import load_dotenv
+
+load_dotenv()  # Load variables from .env
 from werkzeug.utils import secure_filename
 
 from ai_engine.budget_analyzer import BudgetAnalyzer
