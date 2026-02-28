@@ -23,11 +23,11 @@ class ExpenseCategorizer:
     }
 
     ICONS = {
-        'housing': '🏠', 'utilities': '💡', 'groceries': '🛒',
-        'transportation': '🚗', 'healthcare': '🏥', 'insurance': '🛡️',
-        'entertainment': '🎬', 'dining_out': '🍽️', 'shopping': '🛍️',
-        'education': '📚', 'savings': '💰', 'debt_payment': '💳',
-        'other': '📌',
+        'housing': '', 'utilities': '', 'groceries': '',
+        'transportation': '', 'healthcare': '', 'insurance': '',
+        'entertainment': '', 'dining_out': '', 'shopping': '',
+        'education': '', 'savings': '', 'debt_payment': '',
+        'other': '',
     }
 
     def categorize(self, data):
@@ -43,7 +43,7 @@ class ExpenseCategorizer:
                 'description': desc,
                 'amount': amount,
                 'category': cat,
-                'icon': self.ICONS.get(cat, '📌'),
+                'icon': self.ICONS.get(cat, ''),
             })
             totals[cat] = totals.get(cat, 0) + amount
 

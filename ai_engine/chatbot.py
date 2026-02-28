@@ -123,7 +123,7 @@ class FinancialChatbot:
             replies = random.sample(self.quick_replies, min(3, len(self.quick_replies)))
         return replies
 
-    # ── Local fallback ───────────────────────────────────────────────────
+    #  Local fallback 
     def _local_response(self, message: str) -> dict:
         kb = {
             'budget': {

@@ -31,7 +31,7 @@ class BudgetAnalyzer:
         ideal_wants = income * 0.30
         ideal_savings = income * 0.20
 
-        # ── Recommendations & health score ────────────────────────────────
+        #  Recommendations & health score 
         recommendations = []
         health_score = 100
         risk_level = 'low'
@@ -92,7 +92,7 @@ class BudgetAnalyzer:
                 'saving_potential': 0,
             })
 
-        # ── Expense breakdown ─────────────────────────────────────────────
+        #  Expense breakdown 
         all_expenses = {k: float(v) for k, v in expenses.items() if float(v) > 0}
         sorted_expenses = sorted(all_expenses.items(), key=lambda x: x[1], reverse=True)
 

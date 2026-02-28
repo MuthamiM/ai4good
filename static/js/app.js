@@ -1,7 +1,7 @@
-/* ═══════════════════════════════════════════════════════════════════════
+/* 
    Fin AI — Main JavaScript
    Handles all page interactions, API calls, charting, and animations.
-   ═══════════════════════════════════════════════════════════════════════ */
+    */
 
 document.addEventListener('DOMContentLoaded', () => {
   initNavbar();
@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initAnalytics();
 });
 
-// ── HelpeKsh ──────────────────────────────────────────────────────────────
+//  HelpeKsh 
 const $ = (sel) => document.querySelector(sel);
 const $$ = (sel) => document.querySelectorAll(sel);
 const fmt = (n) => 'Ksh ' + Number(n).toLocaleString('en-IN', { maximumFractionDigits: 0 });
@@ -51,7 +51,7 @@ const chartDefaults = {
 };
 
 function buildRecItem(rec) {
-  const icon = { critical: '🔴', warning: '🟠', success: '🟢', info: '🔵' }[rec.type] || '💡';
+  const icon = { critical: '', warning: '🟠', success: '🟢', info: '' }[rec.type] || '';
   let html = `<div class="rec-item ${rec.type || ''}"><span class="rec-icon">${icon}</span><div class="rec-text">`;
   if (rec.category) html += `<strong>${rec.category}</strong>`;
   html += `<p>${rec.message || rec.text || rec}</p>`;
@@ -60,7 +60,7 @@ function buildRecItem(rec) {
   return html;
 }
 
-// ── Navbar ───────────────────────────────────────────────────────────────
+//  Navbar 
 function initNavbar() {
   const toggle = $('#navToggle');
   const links = $('#navLinks');
@@ -71,7 +71,7 @@ function initNavbar() {
   });
 }
 
-// ── Scroll Animations ───────────────────────────────────────────────────
+//  Scroll Animations 
 function initScrollAnimations() {
   const observer = new IntersectionObserver(
     (entries) => entries.forEach((e) => { if (e.isIntersecting) e.target.classList.add('visible'); }),
@@ -80,9 +80,9 @@ function initScrollAnimations() {
   $$('.animate-on-scroll').forEach((el) => observer.observe(el));
 }
 
-// ═══════════════════════════════════════════════════════════════════════
+// 
 // DASHBOARD (Tracker-style)
-// ═══════════════════════════════════════════════════════════════════════
+// 
 
 // Demo monthly data (12 months) with slight randomisation
 const DEMO_MONTHS = ['Jan 2025', 'Feb 2025', 'Mar 2025', 'Apr 2025', 'May 2025', 'Jun 2025',
@@ -221,9 +221,9 @@ async function runDashboardAnalysis() {
   }
 }
 
-// ═══════════════════════════════════════════════════════════════════════
+// 
 // BUDGET PLANNER
-// ═══════════════════════════════════════════════════════════════════════
+// 
 function initBudget() {
   const form = $('#budgetForm');
   if (!form) return;
@@ -318,9 +318,9 @@ function renderBudgetCharts(r) {
   }
 }
 
-// ═══════════════════════════════════════════════════════════════════════
+// 
 // LOANS
-// ═══════════════════════════════════════════════════════════════════════
+// 
 function initLoans() {
   const form = $('#loanForm');
   if (!form) return;
@@ -377,7 +377,7 @@ function initLoans() {
               <span class="product-tag">Rate: ${p.interest_rate}%</span>
               <span class="product-tag">Max: ${fmt(p.max_eligible_amount)}</span>
               <span class="product-tag">EMI: ${fmt(p.monthly_emi)}/mo</span>
-              <span class="product-tag ${p.affordable ? 'affordable' : 'not-affordable'}">${p.affordable ? '✓ Affordable' : '⚠ Tight'}</span>
+              <span class="product-tag ${p.affordable ? 'affordable' : 'not-affordable'}">${p.affordable ? ' Affordable' : ' Tight'}</span>
             </div>
           </div>`).join('')
       : '<p style="color:var(--text-muted)">No products match your current profile. Follow the tips below to improve.</p>';
@@ -389,9 +389,9 @@ function initLoans() {
   });
 }
 
-// ═══════════════════════════════════════════════════════════════════════
+// 
 // SAVINGS
-// ═══════════════════════════════════════════════════════════════════════
+// 
 function initSavings() {
   const form = $('#savingsForm');
   if (!form) return;
@@ -419,7 +419,7 @@ function initSavings() {
     $('#savingsRequired').textContent = fmt(r.monthly_required);
     $('#savingsRemaining').textContent = fmt(r.remaining);
     const feasEl = $('#savingsFeasible');
-    feasEl.textContent = r.feasible ? '✓ Feasible' : '⚠ Stretch';
+    feasEl.textContent = r.feasible ? ' Feasible' : ' Stretch';
     feasEl.style.color = r.feasible ? '#4ECB71' : '#FF6B6B';
 
     // Growth chart
@@ -474,9 +474,9 @@ function renderGrowthChart(r) {
   });
 }
 
-// ═══════════════════════════════════════════════════════════════════════
+// 
 // CHATBOT
-// ═══════════════════════════════════════════════════════════════════════
+// 
 function initChat() {
   const form = $('#chatForm');
   if (!form) return;
@@ -534,9 +534,9 @@ function initChat() {
   }
 }
 
-// ═══════════════════════════════════════════════════════════════════════
+// 
 // ANALYTICS (Risk, Balance Sheet, Decision Impact)
-// ═══════════════════════════════════════════════════════════════════════
+// 
 function initAnalytics() {
   // Tab switching
   $$('.tab-btn').forEach((btn) => {
@@ -561,7 +561,7 @@ function initAnalytics() {
   initDecisionImpact();
 }
 
-// ── Fixed Income ────────────────────────────────────────────────────────
+//  Fixed Income 
 function initFixedIncome() {
   const addBtn = $('#addHolding');
   const analyzeBtn = $('#analyzeFixedIncome');
@@ -614,7 +614,7 @@ function initFixedIncome() {
   });
 }
 
-// ── Balance Sheet ───────────────────────────────────────────────────────
+//  Balance Sheet 
 function initBalanceSheet() {
   const form = $('#bsForm');
   if (!form) return;
@@ -678,7 +678,7 @@ function renderPie(canvasId, dataObj) {
   });
 }
 
-// ── Decision Impact ─────────────────────────────────────────────────────
+//  Decision Impact 
 function initDecisionImpact() {
   const form = $('#diForm');
   if (!form) return;

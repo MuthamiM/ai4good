@@ -54,7 +54,7 @@ def init_db():
 init_db()
 
 
-# ── Page Routes ──────────────────────────────────────────────────────────────
+#  Page Routes 
 
 @app.route('/')
 def index():
@@ -96,7 +96,7 @@ def onboarding():
     return render_template('onboarding.html')
 
 
-# ── API Routes ───────────────────────────────────────────────────────────────
+#  API Routes 
 
 @app.route('/api/budget/analyze', methods=['POST'])
 def analyze_budget():

@@ -11,7 +11,7 @@ import math
 class RiskOptimizationEngine:
     """Provides three core analyses used on the Analytics page."""
 
-    # ── 1. Fixed-Income Risk & Optimization ──────────────────────────────
+    #  1. Fixed-Income Risk & Optimization 
     def analyze_fixed_income(self, data):
         """Score risk across the user's fixed-income holdings and suggest
         optimizations (duration, diversification, reinvestment)."""
@@ -95,7 +95,7 @@ class RiskOptimizationEngine:
             'recommendations': recs,
         }
 
-    # ── 2. Balance-Sheet-Aware Valuation ─────────────────────────────────
+    #  2. Balance-Sheet-Aware Valuation 
     def balance_sheet_valuation(self, data):
         """Compute net worth, solvency metrics, and valuation ratios
         from a simplified personal balance sheet."""
@@ -183,7 +183,7 @@ class RiskOptimizationEngine:
             },
         }
 
-    # ── 3. Integrated Impact on Pricing & Decisions ──────────────────────
+    #  3. Integrated Impact on Pricing & Decisions 
     def decision_impact(self, data):
         """Simulate the financial impact of a proposed decision (e.g. taking
         a loan, making an investment, quitting a job) on the user's overall

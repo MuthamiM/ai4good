@@ -1,5 +1,5 @@
 
- Γ¢à∩╕Å wrangler 4.59.1 (update available 4.69.0)
+ Γ¢à∩Å wrangler 4.59.1 (update available 4.69.0)
 ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
 Using vars defined in .env
 Your Worker has access to the following bindings:
@@ -12,5 +12,5 @@ X [ERROR] Invalid Python package name "fastapi
 " found in cf-requirements.txt. Note that cf-requirements.txt should contain package names only, not version specifiers.
 
 
-≡ƒ¬╡  Logs were written to "C:\Users\Admin\AppData\Roaming\xdg.config\.wrangler\logs\wrangler-2026-02-27_23-08-22_294.log"
+≡ƒ¬  Logs were written to "C:\Users\Admin\AppData\Roaming\xdg.config\.wrangler\logs\wrangler-2026-02-27_23-08-22_294.log"
 Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 76

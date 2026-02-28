@@ -6,12 +6,12 @@
 
 **FinWise AI** is a comprehensive financial inclusion platform designed to empower underserved communities with personalized, AI-driven financial insights, budgeting tools, and loan eligibility verification.
 
-## 🔗 Live Application
+##  Live Application
 **Live Demo:** [https://mussa21.pythonanywhere.com](https://mussa21.pythonanywhere.com)
 
 ---
 
-## 🚀 Key Features
+##  Key Features
 
 ### 1. Financial Core Modules
 - **Budget Analyzer**: Smart calculations for 50/30/20 budget rules based on income.
@@ -30,7 +30,7 @@
 
 ---
 
-## 🛠️ Technology Stack
+##  Technology Stack
 - **Backend:** Python + Flask
 - **Database:** SQLite3
 - **Frontend:** HTML5, CSS3, JavaScript
@@ -39,19 +39,19 @@
 
 ---
 
-## 📂 Project Structure
+##  Project Structure
 ```bash
-├── ai_engine/          # AI Core Modules (Budget, Loans, Chatbot)
-├── static/             # CSS Page Styles, JS Logic & Assets
-├── templates/          # Jinja2 HTML Templates
-├── app.py              # Main Flask Server
-├── finai.db           # SQLite Database
-└── requirements.txt    # Project Dependencies
+ ai_engine/          # AI Core Modules (Budget, Loans, Chatbot)
+ static/             # CSS Page Styles, JS Logic & Assets
+ templates/          # Jinja2 HTML Templates
+ app.py              # Main Flask Server
+ finai.db           # SQLite Database
+ requirements.txt    # Project Dependencies
 ```
 
 ---
 
-## 🎯 Our Mission: AI For Good
+##  Our Mission: AI For Good
 FinWise AI aims to bridge the financial knowledge gap, protecting vulnerable users from predatory lending and helping them build a sustainable financial future through the power of responsible AI.
 
 ---

@@ -40,7 +40,7 @@ class LoanEligibilityChecker:
         },
     ]
 
-    # ──────────────────────────────────────────────────────────────────────
+    # 
     def check_eligibility(self, data):
         monthly_income   = float(data.get('monthly_income', 0))
         monthly_expenses = float(data.get('monthly_expenses', 0))

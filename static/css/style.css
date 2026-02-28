@@ -1,8 +1,8 @@
-/* ═══════════════════════════════════════════════════════════════════════
+/* 
    Fin AI — Light Theme Design System
-   ═══════════════════════════════════════════════════════════════════════ */
+    */
 
-/* ── Tokens ──────────────────────────────────────────────────────────── */
+/*  Tokens  */
 :root {
   --bg-primary: #f0f2f5;
   --bg-secondary: #e8ecf3;
@@ -34,7 +34,7 @@
   --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* ── Reset ───────────────────────────────────────────────────────────── */
+/*  Reset  */
 *,
 *::before,
 *::after {
@@ -78,7 +78,7 @@ ul {
   list-style: none
 }
 
-/* ── Navbar ──────────────────────────────────────────────────────────── */
+/*  Navbar  */
 .navbar {
   position: fixed;
   top: 0;
@@ -203,7 +203,7 @@ ul {
   }
 }
 
-/* ── Hero ─────────────────────────────────────────────────────────────── */
+/*  Hero  */
 .hero {
   position: relative;
   min-height: 100vh;
@@ -352,7 +352,7 @@ ul {
   letter-spacing: 1px
 }
 
-/* ── Buttons ─────────────────────────────────────────────────────────── */
+/*  Buttons  */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -405,7 +405,7 @@ ul {
   transform: none !important
 }
 
-/* ── Sections ────────────────────────────────────────────────────────── */
+/*  Sections  */
 .section {
   padding: 5rem 2rem
 }
@@ -437,7 +437,7 @@ ul {
   font-size: 1.05rem
 }
 
-/* ── Features Grid ───────────────────────────────────────────────────── */
+/*  Features Grid  */
 .features-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -528,7 +528,7 @@ ul {
   border-color: rgba(220, 38, 38, 0.15)
 }
 
-/* ── Steps ───────────────────────────────────────────────────────────── */
+/*  Steps  */
 .steps-grid {
   display: flex;
   align-items: center;
@@ -582,7 +582,7 @@ ul {
   }
 }
 
-/* ── Impact ──────────────────────────────────────────────────────────── */
+/*  Impact  */
 .impact-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
@@ -620,7 +620,7 @@ ul {
   font-size: 0.85rem
 }
 
-/* ── CTA ─────────────────────────────────────────────────────────────── */
+/*  CTA  */
 .cta-section {
   padding: 3rem 2rem
 }
@@ -645,7 +645,7 @@ ul {
   margin-bottom: 1.5rem
 }
 
-/* ── Page Header ─────────────────────────────────────────────────────── */
+/*  Page Header  */
 .page-header {
   padding: 7rem 2rem 2rem;
   text-align: center;
@@ -671,7 +671,7 @@ ul {
   font-size: 1rem
 }
 
-/* ── Glass Card ──────────────────────────────────────────────────────── */
+/*  Glass Card  */
 .glass-card {
   padding: 2rem;
   border-radius: var(--radius-lg);
@@ -696,7 +696,7 @@ ul {
   color: var(--accent-purple)
 }
 
-/* ── Dashboard / Tool Container ──────────────────────────────────────── */
+/*  Dashboard / Tool Container  */
 .dashboard-container,
 .tool-container {
   max-width: 1200px;
@@ -704,7 +704,7 @@ ul {
   padding: 2rem
 }
 
-/* ── Stats Row ───────────────────────────────────────────────────────── */
+/*  Stats Row  */
 .stats-row {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -755,7 +755,7 @@ ul {
   letter-spacing: 0.5px
 }
 
-/* ── Metrics Row ─────────────────────────────────────────────────────── */
+/*  Metrics Row  */
 .metrics-row {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -828,7 +828,7 @@ ul {
   color: var(--text-primary)
 }
 
-/* ── Forms ────────────────────────────────────────────────────────────── */
+/*  Forms  */
 .form-grid-2 {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -1006,7 +1006,7 @@ ul {
   color: var(--accent-purple)
 }
 
-/* ── Charts ──────────────────────────────────────────────────────────── */
+/*  Charts  */
 .charts-row {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
@@ -1034,7 +1034,7 @@ ul {
   }
 }
 
-/* ── Recommendations ─────────────────────────────────────────────────── */
+/*  Recommendations  */
 .recs-list {
   display: flex;
   flex-direction: column;
@@ -1097,7 +1097,7 @@ ul {
   margin-top: 0.25rem
 }
 
-/* ── Optimized Budget ────────────────────────────────────────────────── */
+/*  Optimized Budget  */
 .optimized-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -1139,7 +1139,7 @@ ul {
   color: var(--accent-red)
 }
 
-/* ── Score Factors ───────────────────────────────────────────────────── */
+/*  Score Factors  */
 .factors-list {
   display: flex;
   flex-direction: column;
@@ -1182,7 +1182,7 @@ ul {
   color: var(--text-secondary)
 }
 
-/* ── Products Grid ───────────────────────────────────────────────────── */
+/*  Products Grid  */
 .products-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -1240,7 +1240,7 @@ ul {
   color: var(--accent-red)
 }
 
-/* ── Strategy Grid ───────────────────────────────────────────────────── */
+/*  Strategy Grid  */
 .strategy-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
@@ -1291,7 +1291,7 @@ ul {
   color: var(--text-secondary)
 }
 
-/* ── Milestones ──────────────────────────────────────────────────────── */
+/*  Milestones  */
 .milestones-track {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
@@ -1340,7 +1340,7 @@ ul {
   transition: width 1s ease
 }
 
-/* ── Quick Actions ───────────────────────────────────────────────────── */
+/*  Quick Actions  */
 .quick-actions {
   margin-top: 1.5rem
 }
@@ -1388,7 +1388,7 @@ ul {
   color: var(--text-primary)
 }
 
-/* ── Chat ────────────────────────────────────────────────────────────── */
+/*  Chat  */
 .chat-container {
   max-width: 1200px;
   margin: 0 auto;
@@ -1638,7 +1638,7 @@ ul {
   letter-spacing: 0.5px
 }
 
-/* ── Footer ──────────────────────────────────────────────────────────── */
+/*  Footer  */
 .footer {
   padding: 2rem;
   text-align: center;
@@ -1658,7 +1658,7 @@ ul {
   color: var(--text-muted)
 }
 
-/* ── Animations ──────────────────────────────────────────────────────── */
+/*  Animations  */
 .animate-fade-in {
   animation: fadeInUp 0.8s ease both
 }
@@ -1716,7 +1716,7 @@ ul {
   display: none !important
 }
 
-/* ── Responsive ──────────────────────────────────────────────────────── */
+/*  Responsive  */
 @media(max-width:600px) {
   .hero {
     padding: 5rem 1.25rem 3rem
