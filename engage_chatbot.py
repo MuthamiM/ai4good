@@ -11,11 +11,13 @@ def test_engagement():
     
     bot = FinancialChatbot()
     
-    # Mix of General and Financial Questions
+    # Mixed of General and Financial Questions
     questions = [
         "What is the capital of France?",
         "Explain quantum entanglement in 2 sentences.",
         "How can I improve my 13.3% savings rate?",
+        "How to cut wants?",
+        "Show top expenses",
         "What is the meaning of life according to Douglas Adams?"
     ]
     

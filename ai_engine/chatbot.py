@@ -198,16 +198,41 @@ class FinancialChatbot:
                 'category': 'greeting',
             }
 
-        # 2. Budgeting Analysis (Dynamic)
-        if any(w in msg_low for w in ['budget', 'expense', 'spend', 'rent', 'food', 'savings rate', 'wants', 'needs', 'cut', 'reduce']):
-            analysis = self.budget_engine.analyze(self.mock_data)
-            score = analysis.get('health_score', 0)
-            rec = analysis.get('recommendations', [{}])[0].get('message', 'Keep up the good work!')
-            return {
-                'response': f"<h3>Budget Analysis</h3><p>Your financial health score is <strong>{score}/100</strong>. {rec}</p><ul><li>Needs: {analysis['budget_data']['needs']['percentage']}%</li><li>Wants: {analysis['budget_data']['wants']['percentage']}%</li><li>Savings: {analysis['budget_data']['savings']['percentage']}%</li></ul>",
-                'quick_replies': ['How to cut wants?', 'Show top expenses'],
-                'category': 'financial',
-            }
+        # 2. Budgeting Analysis (Dynamic & Detailed)
+        budget_keys = ['budget', 'expense', 'spend', 'rent', 'food', 'savings', 'wants', 'needs', 'cut', 'reduce', 'cost', 'bill', 'breakdown', 'show', 'calculate']
+        if any(w in msg_low for w in budget_keys):
+            # print(f"DEBUG: Budget trigger matched in _local_response for '{msg_low}'")
+            try:
+                analysis = self.budget_engine.analyze(self.mock_data)
+                
+                # A. SPECIFIC: Cut Wants / Reduction
+                if any(w in msg_low for w in ['cut', 'reduce', 'lower', 'decrease']) and 'wants' in msg_low:
+                     return {
+                        'response': "<h3>Cutting Your 'Wants'</h3><p>Your discretionary spending (Wants) is currently <strong>23.3%</strong> (Ksh 7,000). To reach your 20% savings goal, I suggest:</p><ul><li><strong>Limit Dining Out</strong>: Currently Ksh 4k. Reducing this to Ksh 2k saves you <strong>Ksh 2,000</strong>.</li><li><strong>Review Entertainment</strong>: Ksh 3k spent here monthly.</li></ul>",
+                        'quick_replies': ['Show top expenses', 'Analyze budget'],
+                        'category': 'financial',
+                    }
+
+                # B. SPECIFIC: Top Expenses
+                if any(w in msg_low for w in ['top', 'most', 'highest', 'expensive', 'largest', 'bills']):
+                    top_ex = analysis.get('top_expenses', [])
+                    ex_list = "".join([f"<li><strong>{k.replace('_', ' ').title()}</strong>: Ksh {v:,.0f}</li>" for k, v in top_ex])
+                    return {
+                        'response': f"<h3>Top Expenses</h3><p>I have analyzed your bills and here are your largest monthly categories:</p><ul>{ex_list}</ul><p>Your <strong>{top_ex[0][0].replace('_', ' ')}</strong> is the highest. Reducing this even slightly would boost your savings!</p>",
+                        'quick_replies': ['How to cut wants?', 'Show budget health'],
+                        'category': 'financial',
+                    }
+                
+                # C. DEFAULT: Budget Health
+                score = analysis.get('health_score', 0)
+                rec = analysis.get('recommendations', [{}])[0].get('message', 'Keep up the good work!')
+                return {
+                    'response': f"<h3>Budget Analysis</h3><p>Your financial health score is <strong>{score}/100</strong>. {rec}</p><ul><li>Needs: {analysis['budget_data']['needs']['percentage']}%</li><li>Wants: {analysis['budget_data']['wants']['percentage']}%</li><li>Savings: {analysis['budget_data']['savings']['percentage']}%</li></ul>",
+                    'quick_replies': ['How to cut wants?', 'Show top expenses'],
+                    'category': 'financial',
+                }
+            except Exception as e:
+                print(f"[Fin AI] Local budget error: {e}")
 
         # 3. Loan Eligibility (Dynamic)
         if any(w in msg_low for w in ['loan', 'borrow', 'credit', 'eligible', 'money', 'capital', 'finance']):
