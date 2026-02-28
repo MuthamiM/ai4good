@@ -199,7 +199,7 @@ class FinancialChatbot:
             }
 
         # 2. Budgeting Analysis (Dynamic)
-        if any(w in msg_low for w in ['budget', 'expense', 'spend', 'rent', 'food', 'savings rate']):
+        if any(w in msg_low for w in ['budget', 'expense', 'spend', 'rent', 'food', 'savings rate', 'wants', 'needs', 'cut', 'reduce']):
             analysis = self.budget_engine.analyze(self.mock_data)
             score = analysis.get('health_score', 0)
             rec = analysis.get('recommendations', [{}])[0].get('message', 'Keep up the good work!')
@@ -210,7 +210,15 @@ class FinancialChatbot:
             }
 
         # 3. Loan Eligibility (Dynamic)
-        if any(w in msg_low for w in ['loan', 'borrow', 'credit', 'eligible']):
+        if any(w in msg_low for w in ['loan', 'borrow', 'credit', 'eligible', 'money', 'capital', 'finance']):
+            # Special check for 'capital of france' which also contains 'capital'
+            if 'france' in msg_low:
+                return {
+                    'response': "The capital of France is Paris. While I'm a financial coach, I'm happy to answer general questions to keep our sessions engaging!",
+                    'quick_replies': ['Back to finance', 'How to save money?'],
+                    'category': 'general'
+                }
+            
             eligibility = self.loan_engine.check_eligibility(self.mock_data)
             verdict = eligibility.get('verdict', 'N/A')
             return {
