@@ -265,7 +265,7 @@ class RiskOptimizationEngine:
 
         # Impact assessment
         impact_score = 50  # neutral
-        risk_indicatoKsh = []
+        risk_indicators = []
 
         surplus_change = after['monthly_surplus'] - before['monthly_surplus']
         if surplus_change < 0:

@@ -1,6 +1,6 @@
 """
 Fin AI – Loan Eligibility Checker
-Scores useKsh on multiple financial-health factoKsh and matches them
+Scores users on multiple financial-health factors and matches them
 with suitable microfinance products.
 """
 
@@ -10,33 +10,33 @@ class LoanEligibilityChecker:
     PRODUCTS = [
         {
             'name': 'Community Starter Loan',
-            'min_score': 30, 'max_amount': 25_000,
+            'min_score': 30, 'max_amount': 25000,
             'interest_rate': 12, 'tenure_months': 12,
             'description': 'Entry-level microfinance for first-time borrowers.',
         },
         {
             'name': 'Growth Accelerator Loan',
-            'min_score': 50, 'max_amount': 75_000,
+            'min_score': 50, 'max_amount': 75000,
             'interest_rate': 10, 'tenure_months': 24,
-            'description': 'For small-business owneKsh looking to expand.',
+            'description': 'For small-business owners looking to expand.',
         },
         {
             'name': 'Enterprise Builder Loan',
-            'min_score': 70, 'max_amount': 200_000,
+            'min_score': 70, 'max_amount': 20000,
             'interest_rate': 8, 'tenure_months': 36,
             'description': 'Premium product for high-potential entrepreneurs.',
         },
         {
             'name': 'Women Empowerment Fund',
-            'min_score': 25, 'max_amount': 50_000,
+            'min_score': 25, 'max_amount': 50000,
             'interest_rate': 7, 'tenure_months': 18,
             'description': 'Low-interest fund for women entrepreneurs.',
         },
         {
             'name': 'Agricultural Support Loan',
-            'min_score': 35, 'max_amount': 100_000,
+            'min_score': 35, 'max_amount': 100000,
             'interest_rate': 9, 'tenure_months': 12,
-            'description': 'Seasonal funding for farmeKsh and agri-workers.',
+            'description': 'Seasonal funding for farmers and agri-workers.',
         },
     ]
 
@@ -52,7 +52,7 @@ class LoanEligibilityChecker:
         requested_amount = float(data.get('requested_amount', 0))
 
         score = 0
-        factoKsh = []
+        factors = []
 
         # Income level  (0-25)
         if monthly_income > 0:
